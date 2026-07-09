@@ -28,19 +28,23 @@ javac -version
 ### 全体構成図（作成から実行まで）
 ```mermaid
 flowchart LR
-  SRC["Java ファイル"] -->|javac で変換| CLS["class ファイル"]
-  CLS -->|java で起動| JVM["JVM"]
-  JVM --> MAIN["main メソッド"]
-  MAIN --> OUT["画面へ出力"]
+  SRC["HelloFlow.java<br/>を作る"] --> CHECK1{"ファイル名と<br/>public class 名は<br/>一致している？"}
+  CHECK1 -->|はい| JAVAC["javac HelloFlow.java<br/>でコンパイル"]
+  CHECK1 -->|いいえ| ERR1["コンパイルエラー<br/>例: HelloFlow.java の中が<br/>public class HelloFlowX"]
 
-  ERR1["ファイル名とクラス名の不一致"] -.-> SRC
-  ERR2["main がない"] -.-> MAIN
+  JAVAC --> CLS["HelloFlow.class<br/>ができる"]
+  CLS --> RUN["java HelloFlow<br/>で実行"]
+  RUN --> CHECK2{"main メソッドは<br/>ある？"}
+  CHECK2 -->|はい| MAIN["main から<br/>処理開始"]
+  CHECK2 -->|いいえ| ERR2["実行時エラー<br/>main method not found"]
+  MAIN --> OUT["画面へ出力"]
 ```
 
 ポイント:
 - `javac` はソースコードをコンパイルして `.class` を作る
 - `java` は `.class` の中から `main` を探して実行する
-- 初期エラーは、名前の不一致と `main` の有無から確認すると切り分けやすい
+- ファイル名と `public class` 名の不一致は `javac` の段階で失敗する
+- `main` がない場合は、`java` 実行時に失敗する
 
 ---
 
