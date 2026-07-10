@@ -277,9 +277,28 @@ java LibraryDemo
 ---
 
 ## 5. ミニ演習（10分）
+
+各レベルは、Step 3で完成した `LibraryDemo.java` を基準に実施してください。
+次のレベルへ進む前に、Step 3の完成コードへ戻してください。
+
 ### レベル1（基本）
-1. `LocalDate.now()` を `plusDays(3)` して3日後を表示する。
-2. `UUID` を2回生成して値が異なることを確認する。
+1. Step 3の `rawName` と `normalized` に対して `length()` を呼び出す。
+2. `trim()` によって文字列の長さが変わることを確認する。
+3. `price` を `1980`、`taxRate` を `0.08` に変更する。
+4. `Math.round(...)` で計算した税込価格を確認する。
+
+期待出力例:
+```text
+trim前 length: 13
+trim後 length: 9
+税込価格(四捨五入): 2138
+```
+
+### レベル2（拡張）
+1. Step 3の `today` に対して `plusDays(3)` を呼び出し、3日後を取得する。
+2. `UUID.randomUUID().toString()` をもう一度呼び出し、2つ目のUUIDを生成する。
+3. Step 3で生成した `orderId` と、追加したUUIDを表示する。
+4. 2つのUUIDが異なることを確認する。
 
 期待出力例:
 ```text
@@ -289,27 +308,21 @@ UUID-2: 22222222-2222-2222-2222-222222222222
 ```
 
 補足:
-- 例として、2026年5月29日に実行した場合の3日後は `2026-06-01`
-- UUID の値は実行するたびに変わる
-
-### レベル2（拡張）
-1. `trim()` 前後の文字列長を `length()` で比較する。
-2. `price = 1980`、`taxRate = 0.08` に変更し、`Math.round` の結果が変わることを確認する。
-
-期待出力例:
-```text
-trim前 length: 13
-trim後 length: 9
-税込価格(四捨五入): 2138
-```
+- 日付は実行日によって変わる
+- UUIDは実行するたびに変わる
+- 日付とUUIDが例と完全に一致する必要はない
 
 ### レベル3（実務）
-1. `orderId` の先頭に `"ORD-"` を付けた業務向けIDを作り、`today` と合わせて1行で表示する。
+1. Step 3の `orderId` の先頭に `"ORD-"` を付け、`businessOrderId` に代入する。
+2. `today` と `businessOrderId` を1行で表示する。
 
 期待出力例:
 ```text
 2026-05-29 / ORD-123e4567-e89b-12d3-a456-426614174000
 ```
+
+補足:
+- 日付とUUID部分は実行するたびに変わる
 
 ### 実行前予想問題（1分）
 次の結果を実行前に予想してください。
@@ -317,9 +330,10 @@ trim後 length: 9
 - `System.out.println("ABC".length());`
 
 ### デバッグ演習（任意, 5分）
-1. `import java.time.LocalDate;` を一時的に削除してコンパイルする。
-2. `cannot find symbol` を確認したら `import` を戻す。
-3. 再コンパイルして成功を確認する。
+1. Step 3の `import java.time.LocalDate;` を一時的に削除する。
+2. コンパイルして `cannot find symbol` を確認する。
+3. エラーメッセージに表示されたクラス名と発生行を確認する。
+4. `import` を戻し、再コンパイルして成功を確認する。
 
 ---
 
@@ -332,5 +346,4 @@ trim後 length: 9
   -> 日付のみは `LocalDate`、日時は `LocalDateTime`
 - `incompatible types: possible lossy conversion from long to int`
   -> `Math.round(...)` の戻り値は `long`。`(int)` キャストするか変数型を見直す
-
 

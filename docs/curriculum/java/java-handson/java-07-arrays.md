@@ -244,8 +244,14 @@ Keyboard 数量: 2
 ---
 
 ## 5. ミニ演習（10分）
+
+各レベルは、Step 3で完成した `ArrayDemo.java` を基準に実施してください。
+次のレベルへ進む前に、Step 3の完成コードへ戻してください。
+
 ### レベル1（基本）
-1. 商品を1件追加して4件表示する。
+1. `productNames` の末尾に `"Monitor"` を追加する。
+2. `quantities` の末尾に `1` を追加する。
+3. 2つの配列の要素数をそろえ、商品を4件表示する。
 
 期待出力例:
 ```text
@@ -256,20 +262,23 @@ Monitor 数量: 1
 ```
 
 ### レベル2（拡張）
-1. `quantities` の最大値を求める処理を追加する。
+1. Step 3の `quantities` の先頭要素を、最大数量の初期値にする。
+2. 通常の `for` 文で `quantities` の全要素を比較し、最大数量を求める。
+3. ループ終了後に最大数量を表示する。
 
 期待出力例:
 ```text
-最大値: 8
+最大数量: 5
 ```
 
 ### レベル3（実務）
-1. `for` を拡張for（for-each）に書き換えできるか試す。
-2. インデックスが必要な場面では通常 `for` を残し、用途で使い分ける。
+1. `quantities` の合計処理を拡張for（for-each）で実装する。
+2. 商品名の前にインデックスを表示する処理は、通常の `for` 文で実装する。
+3. インデックスが不要な処理と必要な処理で、2種類の `for` 文を使い分ける。
 
 期待出力例:
 ```text
-合計(拡張for): 18
+合計(拡張for): 10
 0: Laptop
 1: Mouse
 2: Keyboard
@@ -282,9 +291,10 @@ Monitor 数量: 1
 - `System.out.println(nums[nums.length - 1]);`
 
 ### デバッグ演習（任意, 5分）
-1. ループ条件を `i < quantities.length` から `i <= quantities.length` に変更して実行する。
+1. Step 3のループ条件を `i < productNames.length` から `i <= productNames.length` に変更して実行する。
 2. `ArrayIndexOutOfBoundsException` を確認する。
-3. 条件を元に戻して再実行する。
+3. エラーが発生したインデックスと配列の要素数を確認する。
+4. 条件を `i < productNames.length` に戻して再実行する。
 
 ---
 
@@ -295,5 +305,4 @@ Monitor 数量: 1
   -> `productNames` と `quantities` の件数を揃える
 - `length()` と `length` の混同
   -> 配列は `length`（フィールド）
-
 
