@@ -430,6 +430,8 @@ java AdvancedInheritanceDemo
 ---
 
 ## 5. ミニ演習（10分）
+各レベルは、Step 2で完成した `AdvancedInheritanceDemo.java` を基準に実施し、次のレベルへ進む前に完成コードへ戻してください。
+
 ### レベル1（抽象クラス）
 1. `CashPaymentService` を追加する。
 2. `getPaymentName()` は `"現金"` を返す。
@@ -474,4 +476,3 @@ java AdvancedInheritanceDemo
   -> 実装ミス防止のため付ける
 - 抽象クラスとインターフェースの違いが分からない
   -> 抽象クラスは「共通処理を持つ未完成の親クラス」。インターフェースは「このメソッドを持つという約束」
-

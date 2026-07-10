@@ -353,6 +353,8 @@ HTTP/1.1 405 Method Not Allowed
 ---
 
 ## 5. ミニ演習（10分）
+各レベルは、Step 2で完成したサーバーとStep 3の確認手順を基準に実施してください。次のレベルへ進む前に、変更したファイルやコードを完成状態へ戻してください。
+
 ### レベル1（基本）
 1. `/api/health` に `POST` でアクセスし、`405 Method Not Allowed` になることを確認する。
 
@@ -368,6 +370,7 @@ HTTP/1.1 405 Method Not Allowed
 
 ### レベル3（実務）
 1. `GET /api/count` を追加し、保存済みメッセージ件数をJSONで返す。
+2. `POST /api/messages` を2回実行してから、`GET /api/count` で件数を確認する。
 
 期待出力例:
 ```json

@@ -254,12 +254,61 @@ java MethodDemo
 - この章の金額計算メソッドは学習用に `int` を使っている
 - 実務の金額計算では `BigDecimal` の利用を検討する
 
+### Step 5: 開始処理と金額計算をまとめる（仕上げ）
+前のコード全体を置き換え、`MethodDemo.java` を次の内容に更新:
+
+```java
+public class MethodDemo {
+    static void printStartMessage() {
+        System.out.println("受注処理を開始します");
+    }
+
+    static int calcSubtotal(int quantity, int unitPrice) {
+        return quantity * unitPrice;
+    }
+
+    static int calcBillingAmount(int quantity, int unitPrice, int shippingFee, int discount) {
+        int subtotal = calcSubtotal(quantity, unitPrice);
+        return subtotal + shippingFee - discount;
+    }
+
+    public static void main(String[] args) {
+        printStartMessage();
+
+        int billingAmount = calcBillingAmount(4, 1800, 800, 500);
+        System.out.println("請求金額: " + billingAmount);
+    }
+}
+```
+
+実行:
+```bash
+javac -encoding UTF-8 MethodDemo.java
+java MethodDemo
+```
+
+期待出力例:
+```text
+受注処理を開始します
+請求金額: 7500
+```
+
+確認ポイント:
+- 引数なし・戻り値なしのメソッドを呼び出している
+- `calcBillingAmount(...)` から `calcSubtotal(...)` を再利用している
+- 引数で受け取った値を使って計算結果を返している
 
 ---
 
 ## 5. ミニ演習（10分）
+
+各レベルは、Step 5で完成した `MethodDemo.java` を基準に実施してください。
+次のレベルへ進む前に、Step 5の完成コードへ戻してください。
+
 ### レベル1（基本）
-1. `calcBillingAmount` に `taxRatePercent` 引数を追加する。
+1. Step 5の `calcBillingAmount(...)` は残したまま、`taxRatePercent` を受け取る5引数版を追加する。
+2. 5引数版から4引数版を呼び出し、その戻り値へ税率を適用する。
+3. 税率 `10` と `8` を渡し、オーバーロードされたメソッドを2回呼び出す。
 
 期待出力例:
 ```text
@@ -268,7 +317,8 @@ java MethodDemo
 ```
 
 ### レベル2（拡張）
-1. `quantity` が0以下なら `0` を返すガードを追加する。
+1. Step 5の4引数版 `calcBillingAmount(...)` の先頭に、`quantity` が`0`以下なら`0`を返す処理を追加する。
+2. `quantity` に `0` と `-2` を渡して結果を確認する。
 
 期待出力例:
 ```text
@@ -277,8 +327,9 @@ quantity=-2 -> 0
 ```
 
 ### レベル3（実務）
-1. `printStartMessage` を `printStartMessage(String jobName)` に変更する。
-2. 呼び出し側でジョブ名を2パターン渡して表示を確認する。
+1. Step 5の引数なし `printStartMessage()` は残す。
+2. `String jobName` を受け取る `printStartMessage(String jobName)` を追加する。
+3. 引数あり版を、ジョブ名を変えて2回呼び出す。
 
 期待出力例:
 ```text
@@ -287,12 +338,12 @@ quantity=-2 -> 0
 ```
 
 ### 実行前予想問題（1分）
-次の呼び出し結果を実行前に予想してください。
-- `calcBillingAmount(2, 1000, 10)`
-- `calcBillingAmount(0, 1000, 10)`
+Step 5の4引数版メソッドについて、次の呼び出し結果を実行前に予想してください。
+- `calcBillingAmount(2, 1000, 300, 100)`
+- `calcBillingAmount(0, 1000, 300, 100)`
 
 ### デバッグ演習（任意, 5分）
-1. 戻り値型を `int` のまま、`return "0";` のような不一致コードを一度入れてコンパイルする。
+1. Step 5の `calcSubtotal(...)` の戻り値を、一時的に `return "0";` へ変更する。
 2. エラーメッセージを確認して `return 0;` に修正する。
 3. 再コンパイルして成功を確認する。
 

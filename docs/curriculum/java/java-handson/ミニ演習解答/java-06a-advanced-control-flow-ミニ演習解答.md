@@ -1,0 +1,82 @@
+# Java-06A ミニ演習解答
+
+対象資料: `docs/curriculum/java/java-handson/java-06a-advanced-control-flow.md`
+
+## レベル1（基本）解答
+`status` を `"PENDING"` に変更する。
+
+```java
+String status = "PENDING";
+```
+
+期待出力:
+```text
+状態: 入金待ち
+```
+
+次に `status` を `"CANCELLED"` に変更する。
+
+```java
+String status = "CANCELLED";
+```
+
+期待出力:
+```text
+状態: 不明
+```
+
+---
+
+## レベル2（拡張）解答
+```java
+int countdown = 5;
+```
+
+Step 4の `do-while` は変更せず、そのまま使用する。
+
+期待出力:
+```text
+開始まで: 5
+開始まで: 4
+開始まで: 3
+開始まで: 2
+開始まで: 1
+```
+
+---
+
+## レベル3（実務）解答
+Step 4の不正データ条件を変更する。
+
+```java
+if (row == 3 && col == 1) {
+    System.out.println("不正データ検出: row=" + row + ", col=" + col);
+    break inspection;
+}
+```
+
+期待出力の末尾:
+```text
+確認済み: row=2, col=2
+確認済み: row=2, col=3
+不正データ検出: row=3, col=1
+```
+
+ラベル付き `break inspection;` により、内側と外側の両方のループが終了する。
+
+---
+
+## 実行前予想問題の解答
+`int n = 0; do { n++; } while (n < 0);` の結果は `1`
+
+---
+
+## デバッグ演習（任意）の解答
+`case "PAID":` の `break;` を外すと、`PAID` の処理後に `PENDING` の処理まで実行される。
+
+```text
+状態: 入金済み
+状態: 入金待ち
+```
+
+これはフォールスルーと呼ばれる。`case "PAID":` の処理末尾に `break;` を戻すと、`状態: 入金済み` だけが表示される。

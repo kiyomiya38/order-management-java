@@ -308,20 +308,24 @@ age: 25
 ---
 
 ## 5. ミニ演習（10分）
+各レベルは、Step 3の `UserAccount.java` と `EncapsulationDemo.java` を基準に実施し、次のレベルへ進む前に完成コードへ戻してください。
+
 ### レベル1（基本）
-1. `setUsername("   ")` を試して例外を確認する。
+1. `EncapsulationDemo.java` の `setUsername(...)` に `"   "` を渡して例外を確認する。
 
 期待状態:
 - `username は必須です` のような例外メッセージが表示される
 
 ### レベル2（拡張）
-1. `setAge(130)` を試して例外を確認する。
+1. `EncapsulationDemo.java` の `setAge(...)` に `130` を渡して例外を確認する。
 
 期待状態:
 - `age の範囲が不正です` のような例外メッセージが表示される
 
 ### レベル3（実務）
-1. `email` フィールドを追加し、`@` 含有チェックを実装する。
+1. `UserAccount` にprivateな `email`、getter、setterを追加する。
+2. setterで`null`と`@`を含まない値を拒否する。
+3. `EncapsulationDemo` から設定してgetterの値を表示する。
 
 期待出力例:
 ```text

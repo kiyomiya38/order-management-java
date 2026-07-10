@@ -209,27 +209,30 @@ report submitted
 ---
 
 ## 5. ミニ演習（10分）
+各レベルは、Step 3で完成した `InheritanceRulesDemo.java` を基準に実施し、次のレベルへ進む前に完成コードへ戻してください。
+
 ### レベル1（基本）
-1. `GrandParent -> Parent -> Child` の3階層を作り、コンストラクタ順序を出力で確認する。
+1. `Manager` 内の `submitReport()` のコメントを外し、finalメソッドをオーバーライドできないことを確認する。
 
 期待出力例:
 ```text
-GrandParent
-Parent
-Child
+cannot override the final method
 ```
 
 ### レベル2（拡張）
-1. `Parent` に引数なしコンストラクタを追加し、`Child` の `super(...)` 省略時の挙動を確認する。
+1. `DerivedRole extends FixedRole` のコメントを外し、finalクラスを継承できないことを確認する。
 
 期待状態:
-- `super(...)` を明示しなくても、親の引数なしコンストラクタが呼ばれる
+- `cannot inherit from final FixedRole` のようなエラーになる
 
 ### レベル3（実務）
-1. `final` メソッドを通常メソッドへ変更し、オーバーライドが可能になることを確認する。
+1. `Worker.submitReport()` から `final` を外す。
+2. `Manager` でオーバーライドし、`manager report submitted` を表示する。
 
 期待状態:
-- `@Override` を付けた子クラス側メソッドがコンパイルできる
+```text
+manager report submitted
+```
 
 ---
 

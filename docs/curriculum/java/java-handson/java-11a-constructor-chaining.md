@@ -456,25 +456,34 @@ constructor User in class User cannot be applied to given types
 ---
 
 ## 5. ミニ演習（10分）
+
+各レベルは、Step 3で完成した `ConstructorChainingDemo.java` を基準に実施してください。
+次のレベルへ進む前に、Step 3の完成コードへ戻してください。
+
 ### レベル1（基本）
-1. Step 2.5 の `Product(String name, int price, int quantity)` で、`quantity` が `0` 未満なら `0` に補正する。
-2. `new Product("Display", 12000, -3)` を追加して確認する。
-
-期待出力例:
-```text
-Display / 12000 / 0
-```
-
-### レベル2（拡張）
-1. Step 3 の `User` に引数なしコンストラクタを追加して `new User()` を成功させる。
+1. `User` に引数なしコンストラクタを追加する。
+2. `this("guest")` を使って既存の引数ありコンストラクタへ処理をつなぐ。
+3. `new User()` で生成した名前を表示する。
 
 期待出力例:
 ```text
 guest
 ```
 
+### レベル2（拡張）
+1. `User(String name, String role)` コンストラクタを追加する。
+2. 既存の `User(String name)` から `this(name, "member")` を呼び出す。
+3. `new User("Tanaka")` の名前と役割を表示する。
+
+期待出力例:
+```text
+Tanaka / member
+```
+
 ### レベル3（実務）
-1. `this(...)` の前に代入文を書いてコンパイルエラーを確認する。
+1. レベル2の `User(String name)` で、`this(name, "member")` の前に代入文を書く。
+2. `this(...)` はコンストラクタの先頭でなければならないことをコンパイルエラーで確認する。
+3. 確認後は代入文を削除して再コンパイルする。
 
 期待状態:
 - `call to this must be first statement in constructor` のようなエラーが表示される

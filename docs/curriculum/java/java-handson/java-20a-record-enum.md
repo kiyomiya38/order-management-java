@@ -311,6 +311,8 @@ java RecordEnumDemo
 ---
 
 ## 5. ミニ演習（10分）
+レベル1はStep 2、レベル2はStep 4、レベル3はStep 3と4の完成コードを比較して実施してください。
+
 ### レベル1（基本）
 1. Step 2 の `record Message(long id, String name, String text)` に `String source` を追加する。
 2. `new Message(...)` と表示処理も合わせて修正する。

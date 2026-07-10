@@ -276,35 +276,124 @@ row=1, col=3
 row=2, col=1
 ```
 
+### Step 4: 状態判定と繰り返し処理にまとめる（仕上げ）
+前のコード全体を置き換え、`AdvancedControlFlowDemo.java` を次の内容に更新:
+
+```java
+public class AdvancedControlFlowDemo {
+    public static void main(String[] args) {
+        String status = "PAID";
+
+        switch (status) {
+            case "PAID":
+                System.out.println("状態: 入金済み");
+                break;
+            case "PENDING":
+                System.out.println("状態: 入金待ち");
+                break;
+            default:
+                System.out.println("状態: 不明");
+                break;
+        }
+
+        int countdown = 3;
+        do {
+            System.out.println("開始まで: " + countdown);
+            countdown--;
+        } while (countdown >= 1);
+
+        inspection:
+        for (int row = 1; row <= 3; row++) {
+            for (int col = 1; col <= 3; col++) {
+                if (row == 2 && col == 2) {
+                    System.out.println("不正データ検出: row=" + row + ", col=" + col);
+                    break inspection;
+                }
+                System.out.println("確認済み: row=" + row + ", col=" + col);
+            }
+        }
+    }
+}
+```
+
+実行:
+```bash
+javac -encoding UTF-8 AdvancedControlFlowDemo.java
+java AdvancedControlFlowDemo
+```
+
+期待出力例:
+```text
+状態: 入金済み
+開始まで: 3
+開始まで: 2
+開始まで: 1
+確認済み: row=1, col=1
+確認済み: row=1, col=2
+確認済み: row=1, col=3
+確認済み: row=2, col=1
+不正データ検出: row=2, col=2
+```
+
+確認ポイント:
+- `switch` で状態ごとの処理を分けている
+- `do-while` で処理を1回以上実行している
+- ラベル付き `break` で2重ループ全体を終了している
+
 ---
 
 ## 5. ミニ演習（10分）
-### レベル1（基本）
-1. `switch` の判定対象を `String status = "PAID";` に変更し、状態別メッセージを出す。
 
-期待状態:
-- `status` に応じたメッセージが1つ表示される。
+各レベルは、Step 4で完成した `AdvancedControlFlowDemo.java` を基準に実施してください。
+次のレベルへ進む前に、Step 4の完成コードへ戻してください。
+
+### レベル1（基本）
+1. Step 4の `status` を `"PENDING"` に変更する。
+2. `switch` によって入金待ちのメッセージだけが表示されることを確認する。
+3. 次に `status` を `"CANCELLED"` に変更し、`default` が実行されることを確認する。
+
+期待出力例:
+```text
+status = "PENDING":
+状態: 入金待ち
+
+status = "CANCELLED":
+状態: 不明
+```
 
 ### レベル2（拡張）
-1. `do-while` で `countdown`（3,2,1）を表示する。
+1. Step 4の `countdown` を `5` に変更する。
+2. `do-while` の処理を変更せず、`5`から`1`まで表示されることを確認する。
 
-期待状態:
-- 1回以上実行される後判定ループでカウントダウンできる。
+期待出力例:
+```text
+開始まで: 5
+開始まで: 4
+開始まで: 3
+開始まで: 2
+開始まで: 1
+```
 
 ### レベル3（実務）
-1. 2重ループで「不正データ検出時に処理全体を終了する」挙動をラベル付き `break` で実装する。
+1. Step 4の不正データ条件を `row == 3 && col == 1` に変更する。
+2. `row=2, col=3` までは確認処理が続くことを確認する。
+3. `row=3, col=1` でラベル付き `break` が実行され、2重ループ全体が終了することを確認する。
 
-期待状態:
-- 不正条件で外側ループまで即時終了する。
+期待出力の末尾:
+```text
+確認済み: row=2, col=2
+確認済み: row=2, col=3
+不正データ検出: row=3, col=1
+```
 
 ### 実行前予想問題（1分）
 次のコードの出力を実行前に予想してください。
 - `int n = 0; do { n++; } while (n < 0); System.out.println(n);`
 
 ### デバッグ演習（任意, 5分）
-1. `switch` の `break;` を1つ外して実行する。
-2. フォールスルーで想定外の分岐に流れることを確認する。
-3. `break;` を戻して再実行する。
+1. Step 4の `case "PAID":` にある `break;` を一時的に削除する。
+2. `status` が `"PAID"` のまま実行し、`PENDING` の処理まで続くことを確認する。
+3. `break;` を戻し、`状態: 入金済み` だけが表示されることを確認する。
 
 ---
 

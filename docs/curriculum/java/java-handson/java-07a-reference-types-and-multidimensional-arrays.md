@@ -251,30 +251,114 @@ row=2, col=1, seatNo=302
 row=2, col=2, seatNo=303
 ```
 
+### Step 3: 参照共有と2次元配列をまとめる（仕上げ）
+前のコード全体を置き換え、`ReferenceArrayDemo.java` を次の内容に更新:
+
+```java
+import java.util.Arrays;
+
+public class ReferenceArrayDemo {
+    public static void main(String[] args) {
+        int[] quantitiesA = {3, 5, 2};
+        int[] quantitiesB = quantitiesA;
+        quantitiesB[0] = 99;
+
+        System.out.println("A: " + Arrays.toString(quantitiesA));
+        System.out.println("B: " + Arrays.toString(quantitiesB));
+
+        int[][] seats = {
+                {101, 102, 103},
+                {201, 202, 203},
+                {301, 302, 303}
+        };
+
+        for (int row = 0; row < seats.length; row++) {
+            for (int col = 0; col < seats[row].length; col++) {
+                System.out.println("row=" + row + ", col=" + col + ", seatNo=" + seats[row][col]);
+            }
+        }
+    }
+}
+```
+
+実行:
+```bash
+javac -encoding UTF-8 ReferenceArrayDemo.java
+java ReferenceArrayDemo
+```
+
+期待出力例:
+```text
+A: [99, 5, 2]
+B: [99, 5, 2]
+row=0, col=0, seatNo=101
+row=0, col=1, seatNo=102
+row=0, col=2, seatNo=103
+row=1, col=0, seatNo=201
+row=1, col=1, seatNo=202
+row=1, col=2, seatNo=203
+row=2, col=0, seatNo=301
+row=2, col=1, seatNo=302
+row=2, col=2, seatNo=303
+```
+
+確認ポイント:
+- `quantitiesA` と `quantitiesB` は同じ配列を参照している
+- `seats.length` は行数を表す
+- `seats[row].length` は現在の行の列数を表す
+
 ---
 
 ## 5. ミニ演習（10分）
-### レベル1（基本）
-1. `int[]` をもう1つ作り、参照コピー時と別配列時の差分を表示する。
 
-期待状態:
-- 参照コピー側は同時に変化し、別配列側は変化しない。
+各レベルは、Step 3で完成した `ReferenceArrayDemo.java` を基準に実施してください。
+次のレベルへ進む前に、Step 3の完成コードへ戻してください。
+
+### レベル1（基本）
+1. Step 3に、`int[] quantitiesC = {3, 5, 2};` を追加する。
+2. `quantitiesB[1]` を `88` に変更する。
+3. `quantitiesA`、`quantitiesB`、`quantitiesC` を `Arrays.toString(...)` で表示する。
+
+期待出力例:
+```text
+A: [99, 88, 2]
+B: [99, 88, 2]
+C: [3, 5, 2]
+```
+
+確認ポイント:
+- 参照をコピーした `quantitiesB` の変更は `quantitiesA` にも反映される
+- 別に作成した `quantitiesC` は変更されない
 
 ### レベル2（拡張）
-1. 次のように行ごとの列数が異なる2次元配列を作り、すべての値を表示する。
+1. Step 3の `seats` を、次のように行ごとの列数が異なる2次元配列へ変更する。
    - 1行目: `{101, 102, 103}`
    - 2行目: `{201, 202}`
    - 3行目: `{301, 302, 303, 304}`
+2. Step 3の2重ループは変更せず、すべての値を表示する。
 
-期待状態:
-- `seats[row].length` を使い、各行の列数に合わせて安全に走査できる。
+期待出力の末尾:
+```text
+row=2, col=1, seatNo=302
+row=2, col=2, seatNo=303
+row=2, col=3, seatNo=304
+```
+
+確認ポイント:
+- `seats[row].length` により、各行の列数に合わせて安全に走査できる
 
 ### レベル3（実務）
-1. 2次元配列の合計値を求める。
-2. 行ごとの合計も別々に表示する。
+1. Step 3の `seats` を対象に、各行の合計を求める。
+2. 各行の合計を全体合計へ加算する。
+3. 行ごとの合計と全体合計を表示する。
 
-期待状態:
-- 全体合計と各行合計を正しく表示できる。
+期待出力例:
+```text
+row 0 合計: 306
+row 1 合計: 606
+row 2 合計: 906
+全体合計: 1818
+```
 
 ### 実行前予想問題（1分）
 次の結果を実行前に予想してください。
@@ -282,9 +366,10 @@ row=2, col=2, seatNo=303
 - `System.out.println(values[1].length);`
 
 ### デバッグ演習（任意, 5分）
-1. 2次元配列の内側ループを `col <= seats[row].length` に変更して実行する。
+1. Step 3の内側ループを `col <= seats[row].length` に変更して実行する。
 2. `ArrayIndexOutOfBoundsException` を確認する。
-3. 条件を `col < seats[row].length` に戻して再実行する。
+3. エラーが発生した列インデックスと、その行の要素数を確認する。
+4. 条件を `col < seats[row].length` に戻して再実行する。
 
 ---
 

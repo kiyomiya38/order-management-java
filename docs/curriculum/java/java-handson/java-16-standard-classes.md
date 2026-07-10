@@ -500,6 +500,8 @@ name: Tanaka
 ---
 
 ## 5. ミニ演習（10分）
+レベル1はStep 3と5、レベル2はStep 4と6、レベル3はStep 7の完成コードを基準に実施してください。各課題では指定されたStepの既存コードを変更します。
+
 ### レベル1（基本）
 1. `Product` に `name` と `price` を追加し、`toString()` で `code` / `name` / `price` が見えるようにする。
 2. `Integer.parseInt` に不正文字列を渡したときの挙動を確認する。

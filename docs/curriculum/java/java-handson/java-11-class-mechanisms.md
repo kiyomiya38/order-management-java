@@ -333,13 +333,71 @@ java ClassMechanismDemo
 Keyboard 税込: 5500
 ```
 
+### Step 4: constructor / this / static をまとめる（仕上げ）
+前のコード全体を置き換え、`ClassMechanismDemo.java` を次の内容に更新:
+
+```java
+class PriceUtil {
+    static int calcTaxIncluded(int basePrice) {
+        return basePrice * 110 / 100;
+    }
+}
+
+class Product {
+    static int createdCount = 0;
+    String name;
+    int price;
+
+    Product(String name, int price) {
+        this.name = name;
+        this.price = price;
+        createdCount++;
+    }
+}
+
+public class ClassMechanismDemo {
+    public static void main(String[] args) {
+        Product p1 = new Product("Keyboard", 5000);
+        Product p2 = new Product("Mouse", 2500);
+
+        int taxed = PriceUtil.calcTaxIncluded(p1.price);
+        System.out.println(p1.name + " 税込: " + taxed);
+        System.out.println("作成件数: " + Product.createdCount);
+    }
+}
+```
+
+実行:
+```bash
+javac -encoding UTF-8 ClassMechanismDemo.java
+java ClassMechanismDemo
+```
+
+期待出力例:
+```text
+Keyboard 税込: 5500
+作成件数: 2
+```
+
+確認ポイント:
+- コンストラクタの引数を `this` でフィールドへ代入している
+- `createdCount` はすべての `Product` インスタンスで共有される
+- `PriceUtil.calcTaxIncluded(...)` はインスタンスを作らずに呼び出せる
+
 
 
 ---
 
 ## 5. ミニ演習（10分）
+
+各レベルは、Step 4で完成した `ClassMechanismDemo.java` を基準に実施してください。
+次のレベルへ進む前に、Step 4の完成コードへ戻してください。
+
 ### レベル1（基本）
-1. `Product` に `quantity` を追加し、同名の引数を使って `this.quantity = quantity;` で初期化する。
+1. `Product` に `int quantity` フィールドを追加する。
+2. コンストラクタに同名の `quantity` 引数を追加する。
+3. `this.quantity = quantity;` でフィールドを初期化する。
+4. Step 4の2つのコンストラクタ呼び出しへ数量を追加し、`p1.quantity` を表示する。
 
 期待出力例:
 ```text
@@ -347,7 +405,9 @@ Keyboard quantity: 2
 ```
 
 ### レベル2（拡張）
-1. `PriceUtil` に割引計算メソッドを追加する。
+1. `PriceUtil` に `calcDiscounted(int basePrice, int discountRatePercent)` を追加する。
+2. `p1.price` と割引率 `10` を渡す。
+3. 割引後価格を表示する。
 
 期待出力例:
 ```text
@@ -355,12 +415,26 @@ Keyboard quantity: 2
 ```
 
 ### レベル3（実務）
-1. `createdCount` を表示するサンプルを再追加し、生成件数を確認する。
+1. Step 4に3件目の `Product` として `Monitor` を追加する。
+2. `Product.createdCount` が`3`になることを確認する。
 
 期待出力例:
 ```text
-作成件数: 2
+作成件数: 3
 ```
+
+### 実行前予想問題（1分）
+Step 4のコードで、`Product` をもう1件生成した後の `Product.createdCount` を予想してください。
+
+```java
+Product p3 = new Product("Monitor", 30000);
+System.out.println(Product.createdCount);
+```
+
+### デバッグ演習（任意, 5分）
+1. Step 4の `PriceUtil.calcTaxIncluded(p1.price)` を、一時的に `PriceUtil.calcTaxIncluded()` へ変更する。
+2. コンパイルして、必要な引数が渡されていないエラーを確認する。
+3. `p1.price` を引数へ戻して再コンパイルする。
 
 ---
 
@@ -373,4 +447,3 @@ Keyboard quantity: 2
   -> `this` はインスタンスメソッド/コンストラクタのみ
 - `name = name;` と書いたのにフィールドが初期化されない
   -> 左辺を `this.name` にして、フィールドと引数を区別する
-

@@ -224,20 +224,73 @@ PAID件数: 2
 - 業務条件で文字列の値を比較するときは `equals` を使う
 - 比較する定数を左側にした `"PAID".equals(status)` は、`status` が `null` でも `false` になる
 
+### Step 4: 参照比較と業務条件をまとめる（仕上げ）
+前のコード全体を置き換え、`StringComparisonDemo.java` を次の内容に更新:
+
+```java
+public class StringComparisonDemo {
+    public static void main(String[] args) {
+        String original = new String("PAID");
+        String sameReference = original;
+        String sameValue = new String("PAID");
+
+        System.out.println("sameReference == original: " + (sameReference == original));
+        System.out.println("sameValue == original: " + (sameValue == original));
+        System.out.println("sameValue.equals(original): " + sameValue.equals(original));
+
+        String[] statuses = {"PAID", "PENDING", "PAID"};
+        int paidCount = 0;
+
+        for (String status : statuses) {
+            if ("PAID".equals(status)) {
+                paidCount++;
+            }
+        }
+
+        System.out.println("PAID件数: " + paidCount);
+    }
+}
+```
+
+実行:
+```bash
+javac -encoding UTF-8 StringComparisonDemo.java
+java StringComparisonDemo
+```
+
+期待出力例:
+```text
+sameReference == original: true
+sameValue == original: false
+sameValue.equals(original): true
+PAID件数: 2
+```
+
+確認ポイント:
+- `==` は同じインスタンスを参照しているか比較する
+- `equals(...)` は文字列の内容を比較する
+- 業務条件で文字列を判定するときは `equals(...)` を使う
+
 ---
 
 ## 5. ミニ演習（10分）
 
+各レベルは、Step 4で完成した `StringComparisonDemo.java` を基準に実施してください。
+次のレベルへ進む前に、Step 4の完成コードへ戻してください。
+
 ### レベル1（基本）
-1. `sameValue` の内容を `"PENDING"` に変更し、`equals` の結果を確認する。
+1. Step 4の `sameValue` の内容を `"PENDING"` に変更する。
+2. `original` とは別の参照であり、文字列の内容も異なることを確認する。
 
 期待出力例:
 ```text
+sameValue == original: false
 sameValue.equals(original): false
 ```
 
 ### レベル2（拡張）
-1. `String anotherReference = original;` を追加し、`original` との `==` と `equals` を確認する。
+1. Step 4に `String anotherReference = original;` を追加する。
+2. `anotherReference` と `original` を `==` と `equals(...)` の両方で比較する。
 
 期待出力例:
 ```text
@@ -246,10 +299,14 @@ anotherReference.equals(original): true
 ```
 
 ### レベル3（実務）
-1. `PAID`, `PENDING`, `CANCELLED` を含む配列から、`PENDING` の件数を `equals` で数える。
+1. Step 4の `statuses` を `{"PAID", "PENDING", "CANCELLED", "PENDING"}` に変更する。
+2. `paidCount` の処理は残したまま、`pendingCount` を追加する。
+3. `"PENDING".equals(status)` を使って `PENDING` の件数を数える。
+4. `PAID` と `PENDING` の件数を表示する。
 
 期待出力例:
 ```text
+PAID件数: 1
 PENDING件数: 2
 ```
 
@@ -259,9 +316,9 @@ PENDING件数: 2
 - `System.out.println(a.equals(b));`
 
 ### デバッグ演習（任意, 5分）
-1. Step 1の `s1.equals(s2)` を `s1 == s2` に変更する。
+1. Step 4の `sameValue.equals(original)` を `sameValue == original` に変更する。
 2. 内容が同じでも `false` になることを確認する。
-3. `equals` に戻して `true` になることを確認する。
+3. `sameValue.equals(original)` に戻して `true` になることを確認する。
 
 ---
 

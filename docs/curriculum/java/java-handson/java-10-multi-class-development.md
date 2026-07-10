@@ -470,8 +470,15 @@ java -cp out app.OrderApp
 ---
 
 ## 5. ミニ演習（10分）
+
+各レベルは、Step 4で完成した `src/model`、`src/service`、`src/app` の構成を基準に実施してください。
+次のレベルへ進む前に、Step 4の完成コードへ戻してください。
+
 ### レベル1（基本）
-1. `OrderCalculator` に送料込み計算メソッドを追加する。
+1. `src/service/OrderCalculator.java` に、`OrderItem` と送料を受け取る `calcTotalWithShipping(...)` を追加する。
+2. メソッド内から既存の `calcSubtotal(...)` を呼び出し、小計に送料を加える。
+3. `src/app/OrderApp.java` から送料 `800` を渡して呼び出す。
+4. 表示を `請求額` に変更して結果を確認する。
 
 期待出力例:
 ```text
@@ -479,8 +486,11 @@ Laptop 請求額: 240800
 ```
 
 ### レベル2（拡張）
-1. `OrderItem` を2件作って合計表示する。
-2. `productName` を `"Mouse"` に変更して確認する。
+1. Step 4の `Laptop` を表す `item` は残す。
+2. `src/app/OrderApp.java` に2件目の `OrderItem` として `mouse` を追加する。
+3. `mouse.productName` を `"Mouse"`、数量を `2`、単価を `2500` にする。
+4. `calculator.calcSubtotal(...)` で2件を別々に計算する。
+5. 各商品の小計と2件合計を表示する。
 
 期待出力例:
 ```text
@@ -491,9 +501,10 @@ Mouse 小計: 5000
 
 ### レベル3（実務: package/import 失敗パターン修正）
 1. `src/service/OrderCalculator.java` の `import model.OrderItem;` を一度削除してコンパイルする。
-2. `cannot find symbol` を確認したら `import` を戻して再コンパイルする。
+2. `OrderItem` を解決できない `cannot find symbol` を確認したら、`import` を戻して再コンパイルする。
 3. `src/model/OrderItem.java` の `package model;` を一時的に `package models;` に変えてコンパイルする。
-4. パッケージ宣言とフォルダ階層を一致させて修正し、再実行する。
+4. `OrderCalculator` が `model.OrderItem` を解決できないことを確認する。
+5. `package model;` に戻し、Step 4のコンパイル・実行コマンドで復旧を確認する。
 
 期待出力例:
 ```text
@@ -505,22 +516,19 @@ Laptop 小計: 240000
 ```
 
 ### レベル4（実務: classpath 失敗パターン修正）
-1. `java app.OrderApp` を実行し、失敗することを確認する。
-2. `java -cp . app.OrderApp` を実行し、失敗することを確認する。
-3. `java -cp out app.OrderApp` で成功することを確認する。
+1. Step 4でコンパイルした後、`java app.OrderApp` を実行し、失敗することを確認する。
+2. 次に `java -cp . app.OrderApp` を実行し、失敗することを確認する。
+3. 最後に `java -cp out app.OrderApp` を実行し、成功することを確認する。
 4. `-cp out` と `-cp .` の違いを、クラス探索の起点という言葉で説明する。
 
 期待状態:
 - `-cp out` が必要な理由を、`out/app/OrderApp.class` の位置と結びつけて説明できる。
 
 ### 実行前予想問題（1分）
-次のうち、`src/app/OrderApp.java` から `OrderCalculator` を使うために必須な行を実行前に選んでください。
+Step 4のパッケージ構成を維持する場合、次のうち `src/app/OrderApp.java` に必要な行を実行前に選んでください。
 1. `package app;`
 2. `import service.OrderCalculator;`
 3. `import java.util.List;`
-
-答え合わせ:
-- 必須は `1` と `2`（`3` はこの課題では不要）。
 
 ---
 

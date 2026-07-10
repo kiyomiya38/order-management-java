@@ -281,26 +281,28 @@ java InheritanceDemo
 ---
 
 ## 5. ミニ演習（10分）
+Step 4の確認変更を元へ戻し、各レベルはStep 3の完成コードを基準に実施してください。次のレベルへ進む前に完成コードへ戻してください。
+
 ### レベル1（基本）
-1. `PartTimeEmployee` クラスを追加する。
+1. `Employee` を継承する `PartTimeEmployee` を追加する。
+2. `Sato` を設定して既存の `printProfile()` を呼び出す。
 
 期待出力例:
 ```text
-PartTimeEmployee: Sato
+社員: Sato
 ```
 
 ### レベル2（拡張）
-1. `roleLabel()` をそれぞれ上書きする。
+1. レベル1の `PartTimeEmployee` で `roleLabel()` をオーバーライドし、`"アルバイト"` を返す。
 
 期待出力例:
 ```text
-社員
-管理者
-アルバイト
+アルバイト: Sato
 ```
 
 ### レベル3（実務）
-1. 出力を「役割: 名前」の形式で統一する。
+1. `Employee`、`Manager`、`PartTimeEmployee` を1件ずつ生成する。
+2. 全インスタンスで既存の `printProfile()` を呼び出す。
 
 期待出力例:
 ```text
@@ -318,6 +320,5 @@ PartTimeEmployee: Sato
   -> クラス定義の責務を整理
 - 継承しすぎて複雑化
   -> 共通化が明確な場合に限定する
-
 
 
