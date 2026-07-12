@@ -457,33 +457,36 @@ constructor User in class User cannot be applied to given types
 
 ## 5. ミニ演習（10分）
 
-各レベルは、Step 3で完成した `ConstructorChainingDemo.java` を基準に実施してください。
-次のレベルへ進む前に、Step 3の完成コードへ戻してください。
+各レベルは前のレベルの完成コードを引き継いで実施します。レベル1はStep 3の完成コードから開始してください。
 
 ### レベル1（基本）
 1. `User` に引数なしコンストラクタを追加する。
 2. `this("guest")` を使って既存の引数ありコンストラクタへ処理をつなぐ。
-3. `new User()` で生成した名前を表示する。
+3. `main(...)`の既存処理より後へ、`User guest = new User();`を追加する。
+4. `System.out.println(guest.name);`で、`guest`の名前を表示する。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 guest
 ```
 
 ### レベル2（拡張）
-1. `User(String name, String role)` コンストラクタを追加する。
-2. 既存の `User(String name)` から `this(name, "member")` を呼び出す。
-3. `new User("Tanaka")` の名前と役割を表示する。
+1. レベル1の`User`に`String role`フィールドを追加する。
+2. `User(String name, String role)`コンストラクタを追加し、`this.name = name;`と`this.role = role;`でフィールドを初期化する。
+3. 既存の`User(String name)`の処理を、`this(name, "member");`へ変更する。
+4. 引数なし`User()`と`this("guest")`は削除しない。
+5. `main(...)`で`User member = new User("Tanaka");`を生成する。
+6. `System.out.println(member.name + " / " + member.role);`で名前と役割を表示する。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 Tanaka / member
 ```
 
 ### レベル3（実務）
-1. レベル2の `User(String name)` で、`this(name, "member")` の前に代入文を書く。
+1. レベル2の`User(String name)`で、`this(name, "member")`の前に`this.name = name;`を一時的に追加する。
 2. `this(...)` はコンストラクタの先頭でなければならないことをコンパイルエラーで確認する。
-3. 確認後は代入文を削除して再コンパイルする。
+3. 確認後は追加した`this.name = name;`だけを削除し、レベル2の正常なコードへ戻して再コンパイルする。
 
 期待状態:
 - `call to this must be first statement in constructor` のようなエラーが表示される

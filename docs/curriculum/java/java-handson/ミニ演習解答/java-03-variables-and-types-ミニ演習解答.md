@@ -10,7 +10,7 @@
 ```java
 public class VariableTypeDemo {
     public static void main(String[] args) {
-        String orderCode = "ORD-2026-0099";
+        String orderCode = "ORD-2026-9999";
         int quantity = 3;
         int unitPrice = 1200;
         int totalPrice = quantity * unitPrice;
@@ -27,7 +27,7 @@ public class VariableTypeDemo {
 
 期待出力例:
 ```text
-注文番号: ORD-2026-0099
+注文番号: ORD-2026-9999
 数量: 3
 単価: 1200
 合計: 3600
@@ -37,21 +37,16 @@ public class VariableTypeDemo {
 ---
 
 ## レベル2（拡張）解答
+レベル1の完成コードへ税率と税額の処理を追加する。既存の変数と表示は残す。
 変更内容:
 - `taxRate` を `0.08` に変更
 
 ```java
-public class VariableTypeDemo {
-    public static void main(String[] args) {
-        int totalPrice = 3600;
-        double taxRate = 0.08;
-        double taxAmount = totalPrice * taxRate;
+double taxRate = 0.08;
+double taxAmount = totalPrice * taxRate;
 
-        System.out.println("合計: " + totalPrice);
-        System.out.println("税率: " + taxRate);
-        System.out.println("税額: " + taxAmount);
-    }
-}
+System.out.println("税率: " + taxRate);
+System.out.println("税額: " + taxAmount);
 ```
 
 期待出力例:
@@ -68,22 +63,24 @@ public class VariableTypeDemo {
 ---
 
 ## レベル3（実務）解答
+レベル2の完成コードを引き継ぎ、`totalPrice`の型と値だけを変更する。
 変更内容:
 1. `int totalPrice` を `long totalPrice` に変更
 2. `3000000000L` を代入
 
 ```java
-public class VariableTypeDemo {
-    public static void main(String[] args) {
-        long totalPrice = 3000000000L;
-        System.out.println("合計: " + totalPrice);
-    }
-}
+long totalPrice = 3000000000L;
 ```
 
 期待出力例:
 ```text
+注文番号: ORD-2026-9999
+数量: 3
+単価: 1200
 合計: 3000000000
+支払済み: true
+税率: 0.08
+税額: 2.4E8
 ```
 
 補足:

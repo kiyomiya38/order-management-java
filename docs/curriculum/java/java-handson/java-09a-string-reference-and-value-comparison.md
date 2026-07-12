@@ -275,36 +275,35 @@ PAID件数: 2
 
 ## 5. ミニ演習（10分）
 
-各レベルは、Step 4で完成した `StringComparisonDemo.java` を基準に実施してください。
-次のレベルへ進む前に、Step 4の完成コードへ戻してください。
+各レベルは前のレベルの完成コードを引き継いで実施します。レベル1はStep 4の完成コードから開始してください。
 
 ### レベル1（基本）
 1. Step 4の `sameValue` の内容を `"PENDING"` に変更する。
 2. `original` とは別の参照であり、文字列の内容も異なることを確認する。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 sameValue == original: false
 sameValue.equals(original): false
 ```
 
 ### レベル2（拡張）
-1. Step 4に `String anotherReference = original;` を追加する。
+1. レベル1に `String anotherReference = original;` を追加する。
 2. `anotherReference` と `original` を `==` と `equals(...)` の両方で比較する。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 anotherReference == original: true
 anotherReference.equals(original): true
 ```
 
 ### レベル3（実務）
-1. Step 4の `statuses` を `{"PAID", "PENDING", "CANCELLED", "PENDING"}` に変更する。
+1. レベル2の `statuses` を `{"PAID", "PENDING", "CANCELLED", "PENDING"}` に変更する。
 2. `paidCount` の処理は残したまま、`pendingCount` を追加する。
 3. `"PENDING".equals(status)` を使って `PENDING` の件数を数える。
 4. `PAID` と `PENDING` の件数を表示する。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 PAID件数: 1
 PENDING件数: 2

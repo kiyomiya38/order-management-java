@@ -3,6 +3,7 @@
 対象資料: `docs/curriculum/java/java-handson/java-01-intro.md`
 
 ## レベル1（基本）解答
+直前のハンズオン完成コードから、次の式を変更する。その他のコードは残す。
 変更内容:
 - `検証対象件数` の式を `10 + 20 * 3` に変更
 
@@ -26,6 +27,7 @@ public class IntroHello {
 ---
 
 ## レベル2（拡張）解答
+レベル1の完成コードを引き継ぎ、クラス名の変更と出力行の追加を行う。
 変更内容:
 1. `System.out.println(...)` を1行追加
 2. クラス名を `StartApp` に変更（ファイル名も `StartApp.java`）
@@ -35,8 +37,8 @@ public class IntroHello {
 public class StartApp {
     public static void main(String[] args) {
         System.out.println("受注バッチ開始");
-        System.out.println("事前チェック開始");
         System.out.println("検証対象件数: " + (10 + 20 * 3));
+        System.out.println("処理ステップ2を実行");
         System.out.println("受注バッチ終了");
     }
 }
@@ -51,6 +53,7 @@ java StartApp
 ---
 
 ## レベル3（実務）解答
+レベル2の完成コードを引き継ぎ、すべてのログへ`[INFO]`を追加する。
 変更内容:
 - 各ログ文の先頭に `[INFO]` を付与
 - 表示順序は「開始 -> 件数表示 -> 終了」を維持
@@ -60,6 +63,7 @@ public class StartApp {
     public static void main(String[] args) {
         System.out.println("[INFO] 受注バッチ開始");
         System.out.println("[INFO] 検証対象件数: " + (10 + 20 * 3));
+        System.out.println("[INFO] 処理ステップ2を実行");
         System.out.println("[INFO] 受注バッチ終了");
     }
 }
@@ -69,6 +73,7 @@ public class StartApp {
 ```text
 [INFO] 受注バッチ開始
 [INFO] 検証対象件数: 70
+[INFO] 処理ステップ2を実行
 [INFO] 受注バッチ終了
 ```
 

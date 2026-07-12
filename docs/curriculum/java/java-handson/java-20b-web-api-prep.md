@@ -353,7 +353,7 @@ HTTP/1.1 405 Method Not Allowed
 ---
 
 ## 5. ミニ演習（10分）
-各レベルは、Step 2で完成したサーバーとStep 3の確認手順を基準に実施してください。次のレベルへ進む前に、変更したファイルやコードを完成状態へ戻してください。
+Step 2で完成したサーバーとStep 3の確認手順を基準に、レベル1からレベル3まで順番に進めてください。レベル1は確認のみ、レベル2のファイル名変更は一時的な確認です。`index.html`を元の名前へ戻した後、サーバーコードはそのままレベル3で拡張します。
 
 ### レベル1（基本）
 1. `/api/health` に `POST` でアクセスし、`405 Method Not Allowed` になることを確認する。
@@ -369,8 +369,46 @@ HTTP/1.1 405 Method Not Allowed
 - `Files.exists(...)` が `false` になると `404` を返す、と説明できる
 
 ### レベル3（実務）
-1. `GET /api/count` を追加し、保存済みメッセージ件数をJSONで返す。
-2. `POST /api/messages` を2回実行してから、`GET /api/count` で件数を確認する。
+レベル2で変更した`index.html`のファイル名を元へ戻してから、Step 2のサーバーコードへ次の処理を追加します。
+
+1. `main(...)`にある`/api/messages`のコンテキスト登録より後へ、次の行を追加する。
+
+```java
+server.createContext("/api/count", WebApiPrepDemo::handleCount);
+```
+
+2. `WebApiPrepDemo`クラス内へ、GET以外を拒否して保存件数を返す次のハンドラを追加する。
+
+```java
+private static void handleCount(HttpExchange exchange) throws IOException {
+    if (!"GET".equalsIgnoreCase(exchange.getRequestMethod())) {
+        sendMethodNotAllowed(exchange);
+        return;
+    }
+
+    sendJson(exchange, 200, "{\"count\":" + STORE.size() + "}");
+}
+```
+
+3. `MessageStore`クラスの`list()`より後へ、次の`size()`を追加する。
+
+```java
+synchronized int size() {
+    return messages.size();
+}
+```
+
+4. サーバーを停止して再コンパイル・再起動する。
+5. 別ターミナルで、名前`Taro`と`Jiro`のデータを`POST /api/messages`へ1回ずつ送信する。
+6. `GET /api/count`を実行し、保存件数を確認する。
+
+確認コマンド:
+
+```bash
+curl -i -X POST -H "Content-Type: application/json" -d '{"name":"Taro","message":"first"}' http://localhost:8091/api/messages
+curl -i -X POST -H "Content-Type: application/json" -d '{"name":"Jiro","message":"second"}' http://localhost:8091/api/messages
+curl -i http://localhost:8091/api/count
+```
 
 期待出力例:
 ```json

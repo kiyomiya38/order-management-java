@@ -497,38 +497,118 @@ name: Tanaka
 - `Matcher` は `Pattern` を使って文字列を検索する実行オブジェクト
 - `private static final` で「クラス内で共有し再代入しない定数」を宣言できる
 
----
+### Step 8: 学習した標準クラスを1つのコードにまとめる
+ミニ演習では、ここまで別々に確認した内容を同じコード上で変更します。`StandardClassDemo.java` を次の内容に更新:
 
-## 5. ミニ演習（10分）
-レベル1はStep 3と5、レベル2はStep 4と6、レベル3はStep 7の完成コードを基準に実施してください。各課題では指定されたStepの既存コードを変更します。
+```java
+import java.nio.file.Path;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-### レベル1（基本）
-1. `Product` に `name` と `price` を追加し、`toString()` で `code` / `name` / `price` が見えるようにする。
-2. `Integer.parseInt` に不正文字列を渡したときの挙動を確認する。
+class Product {
+    String code;
+
+    Product(String code) {
+        this.code = code;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{code='" + code + "'}";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Product other)) {
+            return false;
+        }
+        return Objects.equals(code, other.code);
+    }
+}
+
+public class StandardClassDemo {
+    private static final Path STATIC_DIR = Path.of("static");
+    private static final Pattern NAME_PATTERN =
+            Pattern.compile("\"name\"\\s*:\\s*\"(.*?)\"");
+
+    public static void main(String[] args) {
+        Product p1 = new Product("P-001");
+        Product p2 = new Product("P-001");
+        System.out.println(p1);
+        System.out.println("同じ商品: " + p1.equals(p2));
+
+        String quantityText = "12";
+        int quantity = Integer.parseInt(quantityText);
+        Integer boxed = quantity;
+        int unboxed = boxed;
+        System.out.println("数量: " + unboxed);
+
+        StringBuilder log = new StringBuilder();
+        log.append("START");
+        System.out.println(log);
+
+        String body = "{\"name\":\"Tanaka\"}";
+        Matcher matcher = NAME_PATTERN.matcher(body);
+        if (matcher.find()) {
+            System.out.println("抽出名: " + matcher.group(1));
+        }
+        System.out.println("static dir: " + STATIC_DIR);
+    }
+}
+```
 
 期待出力例:
+```text
+Product{code='P-001'}
+同じ商品: true
+数量: 12
+START
+抽出名: Tanaka
+static dir: static
+```
+
+---
+
+## 5. ミニ演習（20分）
+Step 8の完成コードを基準に、レベル1からレベル3まで順番に進めてください。各レベルは直前の変更を残したまま追記・変更します。
+
+### レベル1（基本）
+1. `Product` に `name` と `price` を追加し、コンストラクタで受け取る。
+2. コンストラクタを`Product(String code, String name, int price)`へ変更し、3つのフィールドを初期化する。
+3. `toString()`を、確認対象の出力と同じ`code` / `name` / `price`を含む形式へ変更する。
+4. `p1`と`p2`は、どちらも`new Product("P-001", "Keyboard", 3000)`で生成する。
+5. `quantityText`を一時的に`"12A"`へ変更し、`Integer.parseInt`で`NumberFormatException`が発生することを確認したら`"12"`へ戻す。
+
+確認対象の出力（抜粋）:
 ```text
 Product{code='P-001', name='Keyboard', price=3000}
 ```
 
 ### レベル2（拡張）
-1. `Product` に `hashCode` も実装し、`HashSet` で重複判定を確認する。
-2. `StringBuilder` で3行分のログを作る。
+1. レベル1まで完了した`Product`に`hashCode()`も実装し、同じ商品コードを持つ`p1`と`p2`のハッシュ値が一致することを確認する。
+2. 既存の`StringBuilder`を、`START` / `PROCESS` / `END`の3行分のログを作る処理へ変更する。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
+hashCode一致: true
 START
 PROCESS
 END
 ```
 
 ### レベル3（実務）
-1. `body` を `{"name":"Suzuki"}` に変更し、抽出結果が変わることを確認する。
-2. `STATIC_DIR` の宣言から `final` を外し、再代入して挙動の違いを確認する（確認後は元に戻す）。
+1. レベル2までの変更を残したまま、`body` を `{"name":"Suzuki"}` に変更し、抽出結果が変わることを確認する。
+2. `STATIC_DIR`の宣言から`final`を一時的に外す。
+3. `main(...)`の先頭へ`STATIC_DIR = Path.of("static2");`を追加し、`static dir: static2`と表示できることを確認する。
+4. 確認後は再代入行を削除し、`STATIC_DIR`へ`final`を戻す。レベル1・2の変更と`body`の変更は残す。
 
 期待状態:
-- `抽出名: Suzuki` のように抽出結果を変えられる
-- `final` があると再代入できず、外すと再代入できる
+- `抽出名: Suzuki`と表示される
+- `final`があると再代入できず、外して再代入すると`static dir: static2`と表示される
 
 ---
 

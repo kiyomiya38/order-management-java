@@ -3,11 +3,18 @@
 対象資料: `docs/curriculum/java/java-handson/java-05-class-libraries.md`
 
 ## レベル1（基本）解答
-Step 3の出力処理に、文字列長の表示を追加する。
+Step 3の`normalized`を宣言した直後へ、文字数を受け取る変数を追加する。`length()`の戻り値は`int`型になる。
 
 ```java
-System.out.println("trim前 length: " + rawName.length());
-System.out.println("trim後 length: " + normalized.length());
+int rawLength = rawName.length();
+int normalizedLength = normalized.length();
+```
+
+既存の文字列表示処理の後へ、次の2行を追加する。
+
+```java
+System.out.println("trim前 length: " + rawLength);
+System.out.println("trim後 length: " + normalizedLength);
 ```
 
 `price` と `taxRate` を次のように変更する。
@@ -27,7 +34,7 @@ trim後 length: 9
 ---
 
 ## レベル2（拡張）解答
-Step 3の `today` と `orderId` を利用して、次の処理を追加する。
+レベル1の完成コードを引き継ぎ、既存の `today` と `orderId` を利用して次の処理を追加する。その他の処理は残す。
 
 ```java
 LocalDate threeDaysLater = today.plusDays(3);
@@ -39,12 +46,14 @@ System.out.println("UUID-2: " + secondOrderId);
 ```
 
 確認ポイント:
+- `plusDays(3)`は3日後の新しい`LocalDate`を返し、`today`自体は変更しない
 - `threeDaysLater` は実行日の3日後になる
 - `orderId` と `secondOrderId` は通常、異なる値になる
 
 ---
 
 ## レベル3（実務）解答
+レベル2の完成コードを引き継ぎ、次の2行を追加する。その他の処理は残す。
 ```java
 String businessOrderId = "ORD-" + orderId;
 System.out.println(today + " / " + businessOrderId);
@@ -56,6 +65,52 @@ System.out.println(today + " / " + businessOrderId);
 ```
 
 日付とUUID部分は実行するたびに変わる。
+
+### レベル3完了時の全コード
+
+```java
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+public class LibraryDemo {
+    public static void main(String[] args) {
+        String rawName = "  Shinesoft  ";
+        String normalized = rawName.trim();
+        int rawLength = rawName.length();
+        int normalizedLength = normalized.length();
+
+        int price = 1980;
+        double taxRate = 0.08;
+        int taxed = (int) Math.round(price * (1 + taxRate));
+        int max = Math.max(900, taxed);
+
+        LocalDate today = LocalDate.now();
+        LocalDate tomorrow = today.plusDays(1);
+        LocalDate threeDaysLater = today.plusDays(3);
+        LocalDateTime now = LocalDateTime.now();
+        String orderId = UUID.randomUUID().toString();
+        String secondOrderId = UUID.randomUUID().toString();
+        String businessOrderId = "ORD-" + orderId;
+
+        System.out.println("元の文字列: [" + rawName + "]");
+        System.out.println("整形後: [" + normalized + "]");
+        System.out.println("空白だけか: " + "   ".isBlank());
+        System.out.println("trim前 length: " + rawLength);
+        System.out.println("trim後 length: " + normalizedLength);
+        System.out.println("税込価格(四捨五入): " + taxed);
+        System.out.println("比較結果(大きい方): " + max);
+        System.out.println("営業日: " + today);
+        System.out.println("翌日: " + tomorrow);
+        System.out.println("処理時刻: " + now);
+        System.out.println("注文ID: " + orderId);
+        System.out.println("3日後: " + threeDaysLater);
+        System.out.println("UUID-1: " + orderId);
+        System.out.println("UUID-2: " + secondOrderId);
+        System.out.println(today + " / " + businessOrderId);
+    }
+}
+```
 
 ---
 

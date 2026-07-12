@@ -28,6 +28,7 @@ int requestedQuantity = 0;
 ---
 
 ## レベル2（拡張）解答
+レベル1の完成コードを引き継ぎ、`for`文だけを次の内容へ変更する。
 ```java
 for (int orderNo = 1; orderNo <= 10; orderNo++) {
     if (orderNo % 2 != 0) {
@@ -49,11 +50,12 @@ for (int orderNo = 1; orderNo <= 10; orderNo++) {
 ---
 
 ## レベル3（実務）解答
+レベル2の完成コードを引き継ぎ、`stock`と`for`文を次の内容へ変更する。
 ```java
 int stock = 3;
 
 for (int orderNo = 1; orderNo <= 10; orderNo++) {
-    if (orderNo == 3) {
+    if (orderNo % 2 != 0) {
         continue;
     }
     if (stock <= 0) {
@@ -68,9 +70,9 @@ for (int orderNo = 1; orderNo <= 10; orderNo++) {
 
 期待出力:
 ```text
-処理対象注文: 1
 処理対象注文: 2
 処理対象注文: 4
+処理対象注文: 6
 在庫終了
 ```
 

@@ -469,16 +469,27 @@ java -cp out app.OrderApp
 
 ---
 
-## 5. ミニ演習（10分）
+## 5. ミニ演習（25分）
 
-各レベルは、Step 4で完成した `src/model`、`src/service`、`src/app` の構成を基準に実施してください。
-次のレベルへ進む前に、Step 4の完成コードへ戻してください。
+各レベルは前のレベルの完成コードを引き継いで実施します。レベル1はStep 4のパッケージ構成から開始してください。失敗確認で一時的に壊した箇所だけは、確認後に戻します。
 
 ### レベル1（基本）
-1. `src/service/OrderCalculator.java` に、`OrderItem` と送料を受け取る `calcTotalWithShipping(...)` を追加する。
-2. メソッド内から既存の `calcSubtotal(...)` を呼び出し、小計に送料を加える。
-3. `src/app/OrderApp.java` から送料 `800` を渡して呼び出す。
-4. 表示を `請求額` に変更して結果を確認する。
+1. `src/service/OrderCalculator.java`の`calcSubtotal(...)`より後へ、次のメソッドを追加する。
+
+```java
+public int calcTotalWithShipping(OrderItem item, int shippingFee) {
+    return calcSubtotal(item) + shippingFee;
+}
+```
+
+2. `src/app/OrderApp.java`にある既存の`subtotal`の計算と表示を、次の処理へ置き換える。
+
+```java
+int billingAmount = calculator.calcTotalWithShipping(item, 800);
+System.out.println(item.productName + " 請求額: " + billingAmount);
+```
+
+3. `item`、`calculator`など、それ以外のStep 4のコードは変更しない。
 
 期待出力例:
 ```text
@@ -486,14 +497,20 @@ Laptop 請求額: 240800
 ```
 
 ### レベル2（拡張）
-1. Step 4の `Laptop` を表す `item` は残す。
+1. レベル1の`Laptop`を表す`item`、追加した送料込みメソッド、請求額の表示処理を残す。
 2. `src/app/OrderApp.java` に2件目の `OrderItem` として `mouse` を追加する。
 3. `mouse.productName` を `"Mouse"`、数量を `2`、単価を `2500` にする。
-4. `calculator.calcSubtotal(...)` で2件を別々に計算する。
-5. 各商品の小計と2件合計を表示する。
+4. レベル1の請求額を表示した後へ、次の変数を追加する。
+   - `int laptopSubtotal`: `item`の小計
+   - `int mouseSubtotal`: `mouse`の小計
+   - `int total`: 2つの小計の合計
+5. `calculator.calcSubtotal(...)`を使って`laptopSubtotal`と`mouseSubtotal`を求める。
+6. `laptopSubtotal + mouseSubtotal`を`total`へ代入する。
+7. 各商品の小計と`total`を、確認対象の出力と同じ形式で表示する。
 
 期待出力例:
 ```text
+Laptop 請求額: 240800
 Laptop 小計: 240000
 Mouse 小計: 5000
 2件合計: 245000
@@ -506,7 +523,7 @@ Mouse 小計: 5000
 4. `OrderCalculator` が `model.OrderItem` を解決できないことを確認する。
 5. `package model;` に戻し、Step 4のコンパイル・実行コマンドで復旧を確認する。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 (失敗時)
 error: cannot find symbol

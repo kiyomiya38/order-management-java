@@ -311,28 +311,30 @@ java RecordEnumDemo
 ---
 
 ## 5. ミニ演習（10分）
-レベル1はStep 2、レベル2はStep 4、レベル3はStep 3と4の完成コードを比較して実施してください。
+Step 5の完成コードを基準に、レベル1からレベル3まで順番に進めてください。レベル1と2は直前の変更を残したままコードを拡張し、レベル3では完成コードとStep 3の例を比較します。
 
 ### レベル1（基本）
-1. Step 2 の `record Message(long id, String name, String text)` に `String source` を追加する。
-2. `new Message(...)` と表示処理も合わせて修正する。
+1. Step 5の`record Message(long id, String name, String text)`に`String source`を追加する。
+2. `Message message`の生成処理を、4番目の引数へ`"web"`を渡す`new Message(1, "Taro", "こんにちは、Taroさん", "web")`へ変更する。
+3. `toMessageJson(...)`の`message`項目より後へ、`message.source()`を使った`source`項目を追加する。
+4. `source`はJSON風文字列の最後の項目になるため、その直前の`message`項目末尾へカンマを追加する。
 
 期待出力例:
-```text
-source=web
+```json
+{"status":"CREATED","id":1,"name":"Taro","message":"こんにちは、Taroさん","source":"web"}
 ```
 
 ### レベル2（拡張）
-1. Step 4 の `enum ApiStatus` に `DELETED` を追加する。
-2. `ApiStatus.DELETED` を使ってレスポンスを作り、表示する。
+1. レベル1まで完了したStep 5の`enum ApiStatus`に`DELETED`を追加する。
+2. 既存の`Message`を使い、`ApiStatus.DELETED`を持つ`ApiResponse`を作って表示する。
 
 期待出力例:
-```text
-status=DELETED
+```json
+{"status":"DELETED","id":1,"name":"Taro","message":"こんにちは、Taroさん","source":"web"}
 ```
 
 ### レベル3（実務）
-1. Step 3 の `String status = "CRETAED";` と、Step 4 の `ApiStatus.CREATED` の違いを説明する。
+1. レベル1・2まで完成したコードは変更せず、Step 3の`String status = "CRETAED";`と、現在の`ApiStatus.CREATED`の違いを説明する。
 
 期待状態:
 - `String` は存在しない状態名でもコンパイルが通る、と説明できる

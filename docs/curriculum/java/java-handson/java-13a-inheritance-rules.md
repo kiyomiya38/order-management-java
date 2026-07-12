@@ -209,12 +209,12 @@ report submitted
 ---
 
 ## 5. ミニ演習（10分）
-各レベルは、Step 3で完成した `InheritanceRulesDemo.java` を基準に実施し、次のレベルへ進む前に完成コードへ戻してください。
+各レベルはStep 3のコードを使って順番に実施します。レベル1・2のコンパイルエラー確認用変更は確認後に元へ戻し、レベル3で通常コードを発展させます。
 
 ### レベル1（基本）
 1. `Manager` 内の `submitReport()` のコメントを外し、finalメソッドをオーバーライドできないことを確認する。
 
-期待出力例:
+期待状態:
 ```text
 cannot override the final method
 ```

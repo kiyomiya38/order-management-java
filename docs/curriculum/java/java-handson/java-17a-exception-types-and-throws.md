@@ -155,7 +155,7 @@ n=3
 ---
 
 ## 5. ミニ演習（10分）
-各レベルは、Step 3で完成した `ExceptionTypesDemo.java` を基準に実施し、次のレベルへ進む前に完成コードへ戻してください。
+Step 3で完成した`ExceptionTypesDemo.java`を基準に、レベル1からレベル3まで順番に進めてください。各レベルは直前の変更を利用します。
 
 ### レベル1（基本）
 1. `loadMode("")` を呼び、`ConfigException` の発生を確認する。
@@ -164,16 +164,18 @@ n=3
 - checked例外を `catch` できる
 
 ### レベル2（拡張）
-1. `requirePositive(0)` を呼び、`IllegalArgumentException` を確認する。
+1. レベル1の`ConfigException`確認処理を残したまま、`requirePositive(0)`を別の`try` / `catch`で呼び、`IllegalArgumentException`を確認する。
 
 期待状態:
 - unchecked例外を `catch` できる
 
 ### レベル3（実務）
-1. `main` に `throws ConfigException` を付け、`catch` しない構成も試す。
+1. レベル2まで使用したクラスと検証メソッドは残し、`main`だけを`throws ConfigException`を使う構成へ変更する。
+2. `loadMode("")`を囲む`try` / `catch`を外し、上位へ委譲されることを確認する。
 
 期待状態:
 - `catch` ではなく `throws` で上位へ委譲できる
+- レベル3は例外設計の別案を確認するため、レベル2の`main`を置き換える
 
 ---
 

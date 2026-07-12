@@ -116,13 +116,21 @@ do {
 
 ```mermaid
 flowchart TB
-  OUTER["outer：外側ループ"] --> INNER["内側ループ"]
-  INNER --> SELECT{"終了方法"}
-  SELECT -->|break| INNER_END["内側ループだけ終了"]
-  INNER_END --> OUTER
-  SELECT -->|break outer| OUTER_END["内側・外側の両方を終了"]
-  OUTER_END --> END["外側ループの後"]
+  OUTER["外側ループを実行"] --> INNER["内側ループを実行"]
+  INNER --> SELECT{"どの break を実行するか"}
+  SELECT -->|break;| INNER_END["内側ループだけ終了"]
+  INNER_END --> NEXT_OUTER["外側ループの次の繰り返しへ"]
+  NEXT_OUTER --> OUTER
+  SELECT -->|break ラベル名;| ALL_END["内側・外側の両方を終了"]
+  ALL_END --> NEXT["2重ループを終了して、次の処理へ進む"]
 ```
+
+図の読み方:
+- `break;` は、現在実行している内側ループだけを終了する
+- 内側ループを終了した後も、外側ループは次の繰り返しを続ける
+- `break ラベル名;` は、そのラベルが付いた外側ループまでまとめて終了する
+- 「次の処理」とは、外側の `for` 文の閉じ波括弧 `}` より後に書かれた処理を指す
+- 外側の `for` 文より後に処理がない場合は、現在のメソッドの終了へ進む
 
 ```java
 ラベル名:
@@ -302,12 +310,12 @@ public class AdvancedControlFlowDemo {
             countdown--;
         } while (countdown >= 1);
 
-        inspection:
+        inspection: // 外側のfor文にinspection（検査処理）というラベルを付ける
         for (int row = 1; row <= 3; row++) {
             for (int col = 1; col <= 3; col++) {
                 if (row == 2 && col == 2) {
                     System.out.println("不正データ検出: row=" + row + ", col=" + col);
-                    break inspection;
+                    break inspection; // 内側・外側の両方を終了し、2重ループの次へ進む
                 }
                 System.out.println("確認済み: row=" + row + ", col=" + col);
             }
@@ -344,15 +352,14 @@ java AdvancedControlFlowDemo
 
 ## 5. ミニ演習（10分）
 
-各レベルは、Step 4で完成した `AdvancedControlFlowDemo.java` を基準に実施してください。
-次のレベルへ進む前に、Step 4の完成コードへ戻してください。
+各レベルは前のレベルの完成コードを引き継いで実施します。レベル1はStep 4の完成コードから開始してください。
 
 ### レベル1（基本）
 1. Step 4の `status` を `"PENDING"` に変更する。
 2. `switch` によって入金待ちのメッセージだけが表示されることを確認する。
 3. 次に `status` を `"CANCELLED"` に変更し、`default` が実行されることを確認する。
 
-期待出力例:
+確認対象の出力（値を変えて2回実行）:
 ```text
 status = "PENDING":
 状態: 入金待ち
@@ -365,7 +372,7 @@ status = "CANCELLED":
 1. Step 4の `countdown` を `5` に変更する。
 2. `do-while` の処理を変更せず、`5`から`1`まで表示されることを確認する。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 開始まで: 5
 開始まで: 4
@@ -379,7 +386,7 @@ status = "CANCELLED":
 2. `row=2, col=3` までは確認処理が続くことを確認する。
 3. `row=3, col=1` でラベル付き `break` が実行され、2重ループ全体が終了することを確認する。
 
-期待出力の末尾:
+確認対象となる出力の末尾:
 ```text
 確認済み: row=2, col=2
 確認済み: row=2, col=3

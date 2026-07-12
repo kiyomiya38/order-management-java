@@ -153,28 +153,34 @@ java StreamApiDemo
 ---
 
 ## 5. ミニ演習（10分）
-レベル1と3はStep 3、レベル2はStep 2の完成コードを基準に実施してください。必要な入力用`List`は、指定されたStepの`main(...)`へ追加します。
+Step 3の完成コードを基準に、レベル1からレベル3まで順番に進めてください。既存の`amounts`と合計処理を残したまま、各レベルの処理を`main(...)`へ追記します。
 
 ### レベル1（基本）
-1. `amounts` から最大値を取得する。
+1. Step 3にある既存の`amounts`から、`stream()`、`mapToInt(...)`、`max()`、`orElse(0)`を使って最大値を取得する。
+2. 最大値を`int max`へ代入する。
+3. `System.out.println("最大金額: " + max);`で表示する。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 最大金額: 4500
 ```
 
 ### レベル2（拡張）
-1. `statuses` の `PAID` だけを `List` として取得する。
+1. レベル1の表示より後へ、`List<String> statuses = List.of("PAID", "PENDING", "PAID", "CANCELLED");`を追加する。
+2. `statuses.stream()`、`filter(...)`、`toList()`を使って`"PAID"`だけを抽出する。
+3. 抽出結果を`List<String> paidOnly`へ代入し、`System.out.println(paidOnly);`で表示する。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 [PAID, PAID]
 ```
 
 ### レベル3（実務）
-1. `map` で `"ORD-" + 番号` 形式に変換して表示する。
+1. レベル2の表示より後へ、`List<Integer> numbers = List.of(1, 2, 3);`を追加する。
+2. `numbers.stream()`へ`map(n -> "ORD-" + n)`を適用する。
+3. `forEach(System.out::println)`で変換後の注文番号を1行ずつ表示する。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 ORD-1
 ORD-2

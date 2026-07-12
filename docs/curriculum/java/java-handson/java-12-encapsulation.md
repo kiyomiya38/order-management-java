@@ -308,7 +308,7 @@ age: 25
 ---
 
 ## 5. ミニ演習（10分）
-各レベルは、Step 3の `UserAccount.java` と `EncapsulationDemo.java` を基準に実施し、次のレベルへ進む前に完成コードへ戻してください。
+各レベルは前のレベルの完成コードを引き継いで実施します。レベル1はStep 3から開始してください。不正値へ一時変更した確認コードだけは、例外確認後に正常値へ戻します。
 
 ### レベル1（基本）
 1. `EncapsulationDemo.java` の `setUsername(...)` に `"   "` を渡して例外を確認する。
@@ -317,17 +317,21 @@ age: 25
 - `username は必須です` のような例外メッセージが表示される
 
 ### レベル2（拡張）
-1. `EncapsulationDemo.java` の `setAge(...)` に `130` を渡して例外を確認する。
+1. レベル1の正常値へ戻した`EncapsulationDemo.java`で、`setAge(...)`に`130`を渡して例外を確認する。
 
 期待状態:
 - `age の範囲が不正です` のような例外メッセージが表示される
 
 ### レベル3（実務）
-1. `UserAccount` にprivateな `email`、getter、setterを追加する。
-2. setterで`null`と`@`を含まない値を拒否する。
-3. `EncapsulationDemo` から設定してgetterの値を表示する。
+1. レベル2の不正な年齢をStep 3の正常値`30`へ戻す。
+2. `UserAccount`に`private String email;`を追加する。
+3. `public void setEmail(String email)`を追加し、`email == null || !email.contains("@")`の場合は、`IllegalArgumentException("email 形式が不正です: " + email)`を投げる。
+4. 正常な値は`this.email = email;`で保存する。
+5. `email`を返す`public String getEmail()`を追加する。
+6. `EncapsulationDemo`の既存表示処理より後で、`account.setEmail("user@example.com");`を呼び出す。
+7. `System.out.println("email: " + account.getEmail());`で保存した値を表示する。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 email: user@example.com
 ```

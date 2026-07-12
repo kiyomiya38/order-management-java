@@ -302,36 +302,99 @@ java MethodDemo
 
 ## 5. ミニ演習（10分）
 
-各レベルは、Step 5で完成した `MethodDemo.java` を基準に実施してください。
-次のレベルへ進む前に、Step 5の完成コードへ戻してください。
+各レベルは前のレベルの完成コードを引き継いで実施します。レベル1はStep 5の完成コードから開始してください。
 
 ### レベル1（基本）
-1. Step 5の `calcBillingAmount(...)` は残したまま、`taxRatePercent` を受け取る5引数版を追加する。
-2. 5引数版から4引数版を呼び出し、その戻り値へ税率を適用する。
-3. 税率 `10` と `8` を渡し、オーバーロードされたメソッドを2回呼び出す。
+Step 5のコードは削除せず、次の処理を追加します。
 
-期待出力例:
+1. 4引数版の`calcBillingAmount(...)`より後、`main(...)`より前に、次の5引数版を追加する。
+
+```java
+static int calcBillingAmount(
+        int quantity,
+        int unitPrice,
+        int shippingFee,
+        int discount,
+        int taxRatePercent) {
+    // ここに税率を適用する処理を記述する
+}
+```
+
+2. 5引数版の中から4引数版を呼び出し、戻り値を`int amountBeforeTax`へ代入する。
+
+```java
+int amountBeforeTax = calcBillingAmount(quantity, unitPrice, shippingFee, discount);
+```
+
+3. `amountBeforeTax`へ税率を適用した金額を返す。
+   - 計算式: `amountBeforeTax * (100 + taxRatePercent) / 100`
+4. `main(...)`内の既存の表示処理より後に、5引数版を税率`10`と`8`で呼び出す処理を追加する。
+5. 税率`10`の戻り値を`int amountWith10PercentTax`、税率`8`の戻り値を`int amountWith8PercentTax`へ代入する。
+6. `amountWith10PercentTax`と`amountWith8PercentTax`を、確認対象の出力と同じ形式で表示する。
+
+呼び出し時に渡す値:
+
+| 変数 | 数量 | 単価 | 送料 | 割引 | 税率 |
+|---|---:|---:|---:|---:|---:|
+| `amountWith10PercentTax` | `4` | `1800` | `800` | `500` | `10` |
+| `amountWith8PercentTax` | `4` | `1800` | `800` | `500` | `8` |
+
+確認対象の出力（抜粋）:
 ```text
 税率10% 請求金額: 8250
 税率8% 請求金額: 8100
 ```
 
 ### レベル2（拡張）
-1. Step 5の4引数版 `calcBillingAmount(...)` の先頭に、`quantity` が`0`以下なら`0`を返す処理を追加する。
-2. `quantity` に `0` と `-2` を渡して結果を確認する。
+レベル1の完成コードは削除せず、次の処理を追加します。
 
-期待出力例:
+1. 4引数版`calcBillingAmount(...)`の先頭（`subtotal`を計算する処理より前）に、次の処理を追加する。
+
+```java
+if (quantity <= 0) {
+    return 0;
+}
+```
+
+2. `main(...)`内のレベル1の表示処理より後で、4引数版`calcBillingAmount(...)`を次の値で呼び出す。
+
+| 確認対象 | 数量 | 単価 | 送料 | 割引 |
+|---|---:|---:|---:|---:|
+| 数量0 | `0` | `1800` | `800` | `500` |
+| 数量-2 | `-2` | `1800` | `800` | `500` |
+
+3. 戻り値を変数へ代入せず、次の表示形式で直接表示する。
+   - `"quantity=0 -> " + calcBillingAmount(0, 1800, 800, 500)`
+   - `"quantity=-2 -> " + calcBillingAmount(-2, 1800, 800, 500)`
+4. 5引数版`calcBillingAmount(...)`と、レベル1で追加した税込み金額の表示処理も残す。
+
+確認対象の出力（抜粋）:
 ```text
 quantity=0 -> 0
 quantity=-2 -> 0
 ```
 
 ### レベル3（実務）
-1. Step 5の引数なし `printStartMessage()` は残す。
-2. `String jobName` を受け取る `printStartMessage(String jobName)` を追加する。
-3. 引数あり版を、ジョブ名を変えて2回呼び出す。
+レベル2の完成コードは削除せず、次の処理を追加します。
 
-期待出力例:
+1. 引数なし`printStartMessage()`の後ろ（`calcSubtotal(...)`より前）に、次の引数あり版を追加する。
+
+```java
+static void printStartMessage(String jobName) {
+    System.out.println(jobName + " を開始します");
+}
+```
+
+2. `main(...)`内の既存の`printStartMessage();`より後で、引数あり版を次の順番で呼び出す。
+
+```java
+printStartMessage("受注取込");
+printStartMessage("在庫同期");
+```
+
+3. 引数なし版、`calcSubtotal(...)`、4引数版と5引数版の`calcBillingAmount(...)`、レベル1・レベル2で追加した呼び出しと表示はすべて残す。
+
+確認対象の出力（抜粋）:
 ```text
 受注取込 を開始します
 在庫同期 を開始します

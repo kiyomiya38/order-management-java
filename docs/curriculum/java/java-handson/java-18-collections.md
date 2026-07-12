@@ -257,12 +257,15 @@ P-002 -> 5
 ---
 
 ## 5. ミニ演習（10分）
-レベル1はStep 1、レベル2はStep 2、レベル3はStep 3の完成コードを基準に実施してください。
+Step 3の完成コードを基準に、レベル1からレベル3まで順番に進めてください。既存の`Map`処理を残し、`List`、`Set`の順に処理を追記した後、最後に`Map`を変更します。
 
 ### レベル1（基本）
-1. Step 1の `List` を5件に増やし、すべて表示する。
+1. Step 3のimportへ`java.util.ArrayList`と`java.util.List`を追加する。
+2. `main(...)`の既存の`Map`処理より後へ、`List<String> products = new ArrayList<>();`を追加する。
+3. `products`へ`"Keyboard"`、`"Mouse"`、`"Monitor"`、`"Display"`、`"Dock"`の順に追加する。
+4. `products.forEach(System.out::println);`ですべての商品名を表示する。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 Keyboard
 Mouse
@@ -272,16 +275,20 @@ Dock
 ```
 
 ### レベル2（拡張）
-1. Step 2の `Set` に同じ値を複数回追加し、`size()` と内容を表示する。
+1. レベル1まで完了したコードのimportへ`java.util.HashSet`と`java.util.Set`を追加する。
+2. `main(...)`の`List`処理より後へ、`Set<String> tags = new HashSet<>();`を追加する。
+3. `tags`へ`"PAID"`を2回、`"URGENT"`を1回追加する。
+4. `tags.size()`と`tags`を表示する。`HashSet`の表示順は保証されないため、要素の順序は問わない。
 
 期待状態:
-- 同じ値を複数回追加しても、表示される件数は1件分になる
+- `"PAID"`を2回追加しても、`tags.size()`は`2`になる
+- 内容には`PAID`と`URGENT`が1件ずつ含まれる
 
 ### レベル3（実務）
-1. Step 3の `Map` に、同じキー `P-001` で値 `20` を再度 `put` する。
+1. レベル1・2の処理を残したまま、既存の`Map`へ同じキー`P-001`で値`20`を再度`put`する。
 2. キーと上書き後の値を表示する。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 P-001 -> 20
 ```
@@ -295,5 +302,3 @@ P-001 -> 20
   -> キー存在確認に `containsKey` を使う
 - コレクション選定ミス
   -> 順序・重複・キー検索の要件で選ぶ
-
-

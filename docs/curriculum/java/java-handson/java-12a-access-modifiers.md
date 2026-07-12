@@ -197,12 +197,17 @@ internal-rule
 ---
 
 ## 5. ミニ演習（10分）
-各レベルは、Step 2で完成した `src/model` 配下のコードを基準に実施し、次のレベルへ進む前に完成コードへ戻してください。
+各レベルは前のレベルで追加したコードを引き継いで実施します。レベル1はStep 2から開始してください。コンパイルエラー確認用のアクセス変更だけは確認後に戻します。
 
 ### レベル1（基本）
-1. `Account` に `private int loginFailures` を追加し、公開メソッド経由でのみ更新できるようにする。
+1. `Account`に`private int loginFailures = 0;`を追加する。
+2. `loginFailures`を1増やす`public void recordFailure()`を追加する。
+3. 現在の`loginFailures`を返す`public int getLoginFailures()`を追加する。
+4. `AccountInspector.main(...)`の既存処理より後で、`a.recordFailure();`を1回呼び出す。
+5. `System.out.println("loginFailures: " + a.getLoginFailures());`で値を表示する。
+6. `AccountInspector`から`a.loginFailures`を直接変更するコードは書かない。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 loginFailures: 1
 ```

@@ -145,23 +145,53 @@ csv判定: true
 金額判定: true
 ```
 
+### Step 4: 全体一致と部分一致を1つのコードにまとめる
+ミニ演習では、このコードに正規表現を追加・変更します。`RegexBasicsDemo.java` を次の内容に更新:
+
+```java
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class RegexBasicsDemo {
+    public static void main(String[] args) {
+        String email = "user@example.com";
+        Pattern emailPattern = Pattern.compile("^$"); // 演習で簡易メール形式へ変更する
+        System.out.println("メール形式: " + emailPattern.matcher(email).matches());
+
+        String text = "order-2026-0420 paid";
+        Pattern numberPattern = Pattern.compile("\\d{4}-\\d{4}");
+        Matcher numberMatcher = numberPattern.matcher(text);
+        if (numberMatcher.find()) {
+            System.out.println("見つかったID: " + numberMatcher.group());
+        }
+    }
+}
+```
+
+期待出力例:
+```text
+メール形式: false
+見つかったID: 2026-0420
+```
+
 ---
 
 ## 5. ミニ演習（10分）
-レベル1はStep 1、レベル2と3はStep 2の完成コードを基準に実施してください。
+Step 4の完成コードを基準に、レベル1からレベル3まで順番に進めてください。各レベルは直前の変更を残したまま追記・変更します。
 
 ### レベル1（基本）
-1. `user@example.com` を簡易チェックする正規表現を作る（厳密すぎなくてよい）。
+1. `emailPattern`を変更し、既存の`user@example.com`を簡易チェックする正規表現を作る（厳密すぎなくてよい）。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 メール形式: true
 ```
 
 ### レベル2（拡張）
-1. `find()` で `text = "A12 B34 C56"` から2桁数字を順に取り出す。
+1. レベル1のメール形式チェックを残したまま、`text`を`"A12 B34 C56"`へ変更する。
+2. `numberPattern`と検索処理を変更し、`find()`で2桁数字を順に取り出す。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 12
 34
@@ -169,7 +199,7 @@ csv判定: true
 ```
 
 ### レベル3（実務）
-1. Step 2の検索対象を `"A12"` にする。
+1. レベル2まで完了したコードの検索対象を`"A12"`にする。
 2. `Pattern.compile("\\d{2}")` と `Pattern.compile("^\\d{2}$")` で、それぞれ `find()` の結果を確認する。
 
 期待状態:

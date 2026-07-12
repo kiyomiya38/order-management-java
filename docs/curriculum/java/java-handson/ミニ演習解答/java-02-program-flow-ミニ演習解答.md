@@ -10,8 +10,8 @@
 public class HelloFlow {
     public static void main(String[] args) {
         System.out.println("[INFO] バッチ起動");
-        System.out.println("[INFO] 設定ファイル読込");
         System.out.println("[INFO] 受注データ読込");
+        System.out.println("[INFO] 検証処理");
         System.out.println("[INFO] バッチ正常終了");
     }
 }
@@ -28,6 +28,7 @@ public class HelloFlow {
 ---
 
 ## レベル2（拡張）解答
+レベル1のコードを引き継ぎ、引数名とインデントだけを変更する。
 変更内容:
 1. `main` の引数名 `args` を `parameters` に変更
 2. インデントを整えて可読性を維持
@@ -37,6 +38,7 @@ public class HelloFlow {
     public static void main(String[] parameters) {
         System.out.println("[INFO] バッチ起動");
         System.out.println("[INFO] 受注データ読込");
+        System.out.println("[INFO] 検証処理");
         System.out.println("[INFO] バッチ正常終了");
     }
 }
@@ -57,7 +59,7 @@ public class HelloFlow {
 public class HelloFlow {
     public static void main(String[] args) {
         System.out.println("[INFO] 開始");
-        System.out.println("[INFO] コンパイル対象クラス名: HelloFlow");
+        System.out.println("[INFO] 対象クラス: HelloFlow");
         System.out.println("[INFO] 終了");
     }
 }
@@ -66,7 +68,7 @@ public class HelloFlow {
 期待出力例:
 ```text
 [INFO] 開始
-[INFO] コンパイル対象クラス名: HelloFlow
+[INFO] 対象クラス: HelloFlow
 [INFO] 終了
 ```
 

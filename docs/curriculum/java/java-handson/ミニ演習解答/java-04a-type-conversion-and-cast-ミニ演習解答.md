@@ -6,6 +6,8 @@
 変更内容:
 - Step 4の `priceText` を `"2500"` に変更
 
+その他のコードは変更せず、そのまま使用する。
+
 ```java
 String priceText = "2500";
 ```
@@ -15,49 +17,66 @@ String priceText = "2500";
 変換前の価格: 2500
 税込金額(double): 2750.0
 請求金額(int): 2750
+請求金額(String): 2750
 ```
 
 ---
 
 ## レベル2（拡張）解答
 変更内容:
-- Step 4の `taxRate` を `0.08` に変更
+- レベル1の `taxRate` を `0.125` に変更
+
+その他のコードは変更せず、レベル1から引き継ぐ。
 
 ```java
-double taxRate = 0.08;
+double taxRate = 0.125;
 ```
 
 期待出力例:
 ```text
-税込金額(double): 1166.4
-請求金額(int): 1166
+変換前の価格: 2500
+税込金額(double): 2812.5
+請求金額(int): 2812
+請求金額(String): 2812
 ```
 
-`double` から `int` へのキャストでは、小数点以下の `.4` が切り捨てられる。
+`double` から `int` へのキャストでは、小数点以下の `.5` が切り捨てられる。
 
 ---
 
 ## レベル3（実務）解答
 変更内容:
-- 数量文字列を数値へ変換し、小計に税率を適用
+- レベル2のコードへ数量文字列を追加し、小計に税率を適用
 
 ```java
 public class TypeConversionDemo {
     public static void main(String[] args) {
-        String priceText = "1080";
+        String priceText = "2500";
         int price = Integer.parseInt(priceText);
 
+        // レベル3で追加: 数量文字列を数値へ変換する
         String quantityText = "3";
         int quantity = Integer.parseInt(quantityText);
+
+        // レベル3で追加: 単価と数量から小計を計算する
         int subtotal = price * quantity;
 
-        double taxRate = 0.10;
+        double taxRate = 0.125;
+
+        // レベル3で変更: 価格ではなく小計に税率を適用する
         double taxedPrice = subtotal * (1 + taxRate);
         int billingAmount = (int) taxedPrice;
+        String billingText = String.valueOf(billingAmount);
 
+        // レベル3で追加: 数量と小計を表示する
         System.out.println("数量: " + quantity);
         System.out.println("小計: " + subtotal);
-        System.out.println("請求金額: " + billingAmount);
+
+        // レベル2までの表示処理はそのまま使用する
+        System.out.println("変換前の価格: " + priceText);
+        System.out.println("税込金額(double): " + taxedPrice);
+        System.out.println("請求金額(int): " + billingAmount);
+        System.out.println("請求金額(String): " + billingText);
     }
 }
 ```
@@ -65,8 +84,11 @@ public class TypeConversionDemo {
 期待出力例:
 ```text
 数量: 3
-小計: 3240
-請求金額: 3564
+小計: 7500
+変換前の価格: 2500
+税込金額(double): 8437.5
+請求金額(int): 8437
+請求金額(String): 8437
 ```
 
 ---

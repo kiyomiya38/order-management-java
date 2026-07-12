@@ -390,35 +390,47 @@ Keyboard 税込: 5500
 
 ## 5. ミニ演習（10分）
 
-各レベルは、Step 4で完成した `ClassMechanismDemo.java` を基準に実施してください。
-次のレベルへ進む前に、Step 4の完成コードへ戻してください。
+各レベルは前のレベルの完成コードを引き継いで実施します。レベル1はStep 4の完成コードから開始してください。
 
 ### レベル1（基本）
 1. `Product` に `int quantity` フィールドを追加する。
 2. コンストラクタに同名の `quantity` 引数を追加する。
 3. `this.quantity = quantity;` でフィールドを初期化する。
-4. Step 4の2つのコンストラクタ呼び出しへ数量を追加し、`p1.quantity` を表示する。
+4. Step 4の生成処理を、`p1`の数量が`2`、`p2`の数量が`5`になる3引数の呼び出しへ変更する。
+   - `new Product("Keyboard", 5000, 2)`
+   - `new Product("Mouse", 2500, 5)`
+5. `main(...)`の既存表示処理より後へ、次の表示を追加する。
+   - `System.out.println(p1.name + " quantity: " + p1.quantity);`
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 Keyboard quantity: 2
 ```
 
 ### レベル2（拡張）
-1. `PriceUtil` に `calcDiscounted(int basePrice, int discountRatePercent)` を追加する。
-2. `p1.price` と割引率 `10` を渡す。
-3. 割引後価格を表示する。
+1. レベル1の`PriceUtil`で、`calcTaxIncluded(...)`より後へ次のメソッドを追加する。
 
-期待出力例:
+```java
+static int calcDiscounted(int basePrice, int discountRatePercent) {
+    return basePrice * (100 - discountRatePercent) / 100;
+}
+```
+
+2. `main(...)`の既存表示処理より後で、`p1.price`と割引率`10`を渡した戻り値を`int discounted`へ代入する。
+3. `discounted`を`"割引後価格: "`に続けて表示する。
+
+確認対象の出力（抜粋）:
 ```text
 割引後価格: 4500
 ```
 
 ### レベル3（実務）
-1. Step 4に3件目の `Product` として `Monitor` を追加する。
-2. `Product.createdCount` が`3`になることを確認する。
+1. レベル2の`p1`と`p2`を生成した直後、`Product.createdCount`を表示する前へ、次の3件目を追加する。
+   - `Product p3 = new Product("Monitor", 30000, 1);`
+2. `p3`は作成件数の確認に使うため、削除しない。
+3. 既存の`Product.createdCount`の表示結果が`3`になることを確認する。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 作成件数: 3
 ```

@@ -430,7 +430,7 @@ java AdvancedInheritanceDemo
 ---
 
 ## 5. ミニ演習（10分）
-各レベルは、Step 2で完成した `AdvancedInheritanceDemo.java` を基準に実施し、次のレベルへ進む前に完成コードへ戻してください。
+各レベルは前のレベルの完成コードを引き継いで実施します。レベル1はStep 2から開始してください。レベル3の実装削除はエラー確認後に戻します。
 
 ### レベル1（抽象クラス）
 1. `CashPaymentService` を追加する。
@@ -438,7 +438,7 @@ java AdvancedInheritanceDemo
 3. `calculateFee(...)` は `0` を返す。
 4. `main(...)` から `cash.pay(5000, consoleNotifier);` を実行する。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 決済方法: 現金
 金額: 5000
@@ -447,17 +447,17 @@ java AdvancedInheritanceDemo
 ```
 
 ### レベル2（インターフェース）
-1. `ReceiptNotifier` を追加する。
+1. レベル1のコードに`ReceiptNotifier`を追加する。
 2. `notifyResult(...)` で `"領収書: "` から始まるメッセージを表示する。
 3. `Notifier notifier = new ReceiptNotifier();` に差し替えて実行する。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 領収書: カード決済が完了しました。合計: 5050
 ```
 
 ### レベル3（抽象クラスの必要性を確認）
-1. `CashPaymentService` から `calculateFee(...)` を一時的に削除する。
+1. レベル2までの`CashPaymentService`から`calculateFee(...)`を一時的に削除する。
 2. `javac -encoding UTF-8 AdvancedInheritanceDemo.java` を実行し、コンパイルエラーを確認する。
 3. エラー確認後、`calculateFee(...)` を元に戻す。
 

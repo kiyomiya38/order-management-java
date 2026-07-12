@@ -276,7 +276,7 @@ java ExceptionDemo
 ---
 
 ## 5. ミニ演習（10分）
-各レベルは、Step 3で完成した `ExceptionDemo.java` を基準に実施し、次のレベルへ進む前に完成コードへ戻してください。
+Step 3で完成した`ExceptionDemo.java`を基準に、レベル1からレベル3まで順番に進めてください。各レベルは直前の変更を残したまま追記・変更します。
 
 ### レベル1（基本）
 1. `validateQuantity` を `quantity > 1000` もエラーにする。
@@ -285,15 +285,15 @@ java ExceptionDemo
 - `validateQuantity(1001)` で例外が発生する
 
 ### レベル2（拡張）
-1. `validatePrice(int price)` を追加して0未満を弾く。
+1. レベル1の`validateQuantity`を残したまま、`validatePrice(int price)`を追加して0未満を弾く。
 
 期待状態:
 - `validatePrice(-1)` で例外が発生する
 
 ### レベル3（実務）
-1. 例外メッセージに入力値を含める。
+1. レベル1・2で作成した両方の検証メソッドについて、例外メッセージに入力値を含める。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 quantity が不正です: 1001
 ```

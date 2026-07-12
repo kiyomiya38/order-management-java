@@ -777,36 +777,55 @@ Yamada / Platform
 
 ---
 
-## 5. ミニ演習（10分）
-レベル1はStep 4、レベル2と3はStep 5の完成コードを基準に実施してください。各レベルの開始前に、指定されたStepの完成コードへ戻してください。
+## 5. ミニ演習（20分）
+Step 5の完成コードを基準に、レベル1からレベル3まで順番に進めてください。各レベルは直前の変更を残したまま追記・変更します。
 
 ### レベル1（基本）
-1. Step 4 のコードに `Director` クラスを追加する。
+1. Step 5の`Intern`クラスより後、`PolymorphismDemo`クラスより前へ`Employee`を継承する`Director`クラスを追加する。
 2. `roleLabel()` が `"役員"` を返すようにする。
 3. `monthlyBonus()` が `80000` を返すようにする。
-4. `Employee[] employees` に追加して、同じ `for` 文で表示する。
+4. `main(...)`で`Employee director = new Director();`を生成し、`director.name = "Takahashi";`を設定する。
+5. `Employee[] employees`の末尾へ`director`を追加し、既存の`for`文で表示する。
 
-期待出力例:
+確認対象の出力（抜粋）:
 ```text
 Takahashi は 役員
 手当: 80000
 ```
 
 ### レベル2（補足: 子クラス固有情報）
-1. Step 5 のコードで、`Engineer` に `skillName` フィールドを追加する。
-2. `engineer` の `skillName` に `"Java"` を設定する。
-3. `instanceof` を使って、`Engineer` のときだけスキル名を表示する。
+1. レベル1まで完了したコードの `Engineer` に、`skillName` フィールドを追加する。
+2. Step 5の`engineer`変数は`Employee`型のため、名前設定の直後へ次の処理を追加する。
 
-期待出力例:
+```java
+if (engineer instanceof Engineer) {
+    Engineer engineerDetail = (Engineer) engineer;
+    engineerDetail.skillName = "Java";
+}
+```
+
+3. `employees`を処理する最初の`for`文の中で、`printEmployee(employee);`より後へ次の処理を追加する。
+
+```java
+if (employee instanceof Engineer) {
+    Engineer engineer = (Engineer) employee;
+    System.out.println(engineer.name + " / " + engineer.skillName);
+}
+```
+
+4. `Director`と既存の管理チーム表示は残す。
+
+確認対象の出力（抜粋）:
 ```text
 Tanaka / Java
 ```
 
 ### レベル3（実務）
-1. レベル2の `skillName` 表示を、`instanceof` 分岐を使わずに済むように見直す。
-2. `Employee` に `detailLabel()` メソッドを追加する。
-3. `Engineer` 側で `detailLabel()` をオーバーライドし、スキル名込みの文字列を返す。
-4. 呼び出し側は `employee.detailLabel()` だけを呼ぶ。
+1. レベル2まで完了したコードの `skillName` 表示を、`instanceof` 分岐を使わずに済むように見直す。
+2. `Employee`に、`name + " は " + roleLabel()`を返す`detailLabel()`メソッドを追加する。
+3. `Engineer`で`detailLabel()`をオーバーライドし、`name + " / " + skillName`を返す。
+4. レベル2で`for`文へ追加した`Engineer`判定の`if`ブロック全体を削除し、同じ位置へ`System.out.println(employee.detailLabel());`を追加する。
+5. `skillName`の設定処理、`Director`、`printEmployee(...)`、管理チーム表示は残す。
 
 期待状態:
 - 呼び出し側の `if` / `instanceof` 分岐を減らせる

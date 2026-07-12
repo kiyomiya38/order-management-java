@@ -13,7 +13,9 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-java-handson.ps1
 確認対象:
 
 - Java / `javac` / Mavenコマンド
-- Java-20Aの`record` / `enum`完成コードのコンパイル
+- Java-01〜Java-20Aの各最終Step完成コードのコンパイル
+- Java-10、Java-12、Java-12Aの複数ファイル完成コードのコンパイル
+- 全コードを掲載したレベル3解答（Java-05、Java-12A、Java-16、Java-19）のコンパイル
 - Java-20Bの`HttpServer`完成コードのコンパイル
 - Java-21のMaven/JUnitテスト
 - Java教材内のローカルリンクとコードフェンス
