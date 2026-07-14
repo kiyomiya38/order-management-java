@@ -276,26 +276,32 @@ java ExceptionDemo
 ---
 
 ## 5. ミニ演習（10分）
-Step 3で完成した`ExceptionDemo.java`を基準に、レベル1からレベル3まで順番に進めてください。各レベルは直前の変更を残したまま追記・変更します。
+Step 3で完成した`ExceptionDemo.java`を基準に、レベル1からレベル3まで順番に進めてください。検証メソッドの変更は引き継ぎ、例外確認用の呼び出し値は次のレベルを実行できる値へ変更します。
 
 ### レベル1（基本）
 1. `validateQuantity` を `quantity > 1000` もエラーにする。
+2. `main(...)`の`validateQuantity(...)`へ`1001`を渡して上限超過を確認する。
+3. 確認後は呼び出し値を正常値`1`へ変更してからレベル2へ進む。
 
 期待状態:
 - `validateQuantity(1001)` で例外が発生する
 
 ### レベル2（拡張）
 1. レベル1の`validateQuantity`を残したまま、`validatePrice(int price)`を追加して0未満を弾く。
+2. `main(...)`の`try`内で、正常値へ戻した数量の確認より後に`int price = validatePrice(-1);`を追加する。
+3. 続けて`System.out.println("価格: " + price);`を追加し、価格の例外が発生した場合はこの表示まで進まないことを確認する。
 
 期待状態:
 - `validatePrice(-1)` で例外が発生する
 
 ### レベル3（実務）
 1. レベル1・2で作成した両方の検証メソッドについて、例外メッセージに入力値を含める。
+2. `main(...)`を、`validateQuantity(1001)`と`validatePrice(-1)`を別々の`try-catch`で確認する構成へ変更する。
 
 確認対象の出力（抜粋）:
 ```text
 quantity が不正です: 1001
+price が不正です: -1
 ```
 
 ---

@@ -54,9 +54,11 @@ javac -version
 
 ### Step 0: 作業フォルダを作る
 ```bash
-mkdir -p ~/order-management-springboot/practice/java/handson12a/src/model
+mkdir -p ~/order-management-springboot/practice/java/handson12a/src/model ~/order-management-springboot/practice/java/handson12a/out
 cd ~/order-management-springboot/practice/java/handson12a
 ```
+
+`mkdir -p`に2つのパスを指定すると、`handson12a`、`src/model`、`out`までの必要なディレクトリをこの時点でまとめて作成できます。各Javaファイルは、以降のStepで説明に従って作成します。
 
 ### Step 1: 同一パッケージでアクセス確認
 作成ファイル: `src/model/Account.java`

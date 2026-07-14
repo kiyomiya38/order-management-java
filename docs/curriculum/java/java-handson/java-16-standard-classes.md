@@ -589,8 +589,19 @@ Product{code='P-001', name='Keyboard', price=3000}
 ```
 
 ### レベル2（拡張）
-1. レベル1まで完了した`Product`に`hashCode()`も実装し、同じ商品コードを持つ`p1`と`p2`のハッシュ値が一致することを確認する。
-2. 既存の`StringBuilder`を、`START` / `PROCESS` / `END`の3行分のログを作る処理へ変更する。
+1. レベル1まで完了した`Product`の`equals(...)`より後へ、次の`hashCode()`を追加する。
+
+```java
+@Override
+public int hashCode() {
+    return Objects.hash(code);
+}
+```
+
+`Objects.hash(code)`は、商品コードをもとに比較用の整数値を作る。`equals(...)`で同じと判定する商品は、`hashCode()`も同じ値になるように実装する。
+
+2. 同じ商品コードを持つ`p1`と`p2`について、`p1.hashCode() == p2.hashCode()`の結果を表示し、`true`になることを確認する。
+3. 既存の`StringBuilder`を、`START` / `PROCESS` / `END`の3行分のログを作る処理へ変更する。
 
 確認対象の出力（抜粋）:
 ```text

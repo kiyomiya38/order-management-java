@@ -261,6 +261,9 @@ class BankPaymentService extends PaymentService { // 銀行振込用の子クラ
 
 public class AdvancedInheritanceDemo { // 実行用クラス
     public static void main(String[] args) { // Javaアプリの開始地点
+        // PaymentServiceは抽象クラスなので直接newできない。実体には、処理が完成している子クラスをnewする
+        // 左辺を共通の親クラス型PaymentServiceにすると、カード決済と銀行振込を同じ決済サービスとして扱える
+        // この「親クラス型の変数で子クラスの実体を受ける」仕組みは、Java-15の多態性で詳しく学ぶ
         PaymentService card = new CardPaymentService(); // 親クラス型の変数にカード決済の実体を入れる
         PaymentService bank = new BankPaymentService(); // 親クラス型の変数に銀行振込の実体を入れる
 
